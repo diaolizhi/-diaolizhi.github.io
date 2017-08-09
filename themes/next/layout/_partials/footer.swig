@@ -3,15 +3,20 @@
   &copy; {% if theme.since and theme.since != current %} {{ theme.since }} - {% endif %}
   <span itemprop="copyrightYear">{{ current }}</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-pencil-square-o"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">{{ config.author }}</span>
+  <!--
   {% if theme.cnzz_siteid %}
    <span style="margin-left:8px;">
    <script src="http://s6.cnzz.com/stat.php?id={{ theme.cnzz_siteid }}&web_id={{ theme.cnzz_siteid }}" type="text/javascript"></script>
    </span>
+   -->
   {% endif %}
 </div>
+
+
+<!--
 
 <div class="powered-by">
   {{ __('footer.powered', '<a class="theme-link" href="http://hexo.io" target="_blank">Hexo</a>') }}
@@ -24,6 +29,8 @@
   </a>
 </div>
 
+
 <div style="padding-top:1px;">
  <span>鄂ICP备16017973号</span>
 </div>
+-->

@@ -3,16 +3,16 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 务虚笔记
-subtitle: Li Xiaowei's blog
-description: wuxubj,个人博客
-author: wuxubj
+title: 刁礼智的个人博客
+subtitle: Diao Lizhi's blog
+description: Diao Lizhi,个人博客
+author: 刁礼智
 language: zh-Hans
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://www.wuxubj.cn
+#url: http://www.wuxubj.cn
 root: /
 permalink: :year/:month/:title/
 permalink_defaults:
@@ -67,6 +67,8 @@ theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+
+# 用于生成静态网页
 deploy:
 	type: git
 	repository: git@github.com:diaolizhi/diaolizhi.github.io.git
