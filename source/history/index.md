@@ -3,15 +3,8 @@ layout: post
 title: 我的第一篇文章
 categories:
 - Diary
-updated: 2015-12-13 20:18:54
-date: 2015-12-13 20:18:54
-tag: test
+date: 2017-4-21 20:18:54
 ---
-
-
-2017/4/21
-
-
 
 
 ### 博客搭建完成
