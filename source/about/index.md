@@ -4,10 +4,10 @@ date: 2016-05-21 18:19:45
 heart: true
 ---
 <blockquote class="blockquote-center">既然选择了远方，便只顾风雨兼程。
-未来的生活，掌握在自己手中。</br></blockquote>
+</br></blockquote>
 
 <center>
-97 年出生，摩羯座，性别男
+97 年出生，摩羯座
 
 贺州学院 - 网络工程
 
