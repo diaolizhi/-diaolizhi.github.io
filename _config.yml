@@ -71,7 +71,7 @@ theme: next
 # 用于生成静态网页
 deploy:
 	type: git
-	repository: https://github.com/diaolizhi/diaolizhi.github.io.git
+	repository: git@github.com:diaolizhi/diaolizhi.github.io.git
 	branch: master
 
 #add by wuxubj
