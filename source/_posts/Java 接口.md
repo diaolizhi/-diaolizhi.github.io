@@ -1,5 +1,5 @@
 ---
-title: Java 继承
+title: Java 接口
 date: 2017-12-13
 categories: JavaSE
 ---
@@ -83,7 +83,7 @@ class Emlopyee implements Comparable<Emlopyee>{
 输出结果:
 
 >李四的工资是: 1000
-张三的工资是: 2000
-牛七的工资是: 2000
-赵六的工资是: 4000
-王五的工资是: 9000
+ 三的工资是: 2000
+ 七的工资是: 2000
+ 六的工资是: 4000
+ 五的工资是: 9000
