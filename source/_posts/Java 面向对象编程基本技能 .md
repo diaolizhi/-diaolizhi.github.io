@@ -1,7 +1,7 @@
 ---
 title: Java 面向对象编程基本技能
 date: 2018-03-22
-categories: Java
+categories: JavaSE
 ---
 
 第十六篇关于 Java 的笔记. 

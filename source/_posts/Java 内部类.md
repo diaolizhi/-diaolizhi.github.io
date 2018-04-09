@@ -1,7 +1,7 @@
 ---
 title: Java 内部类
 date: 2018-03-19
-categories: Java
+categories: JavaSE
 ---
 
 第十五篇关于 Java 的笔记. 
