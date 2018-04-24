@@ -7,7 +7,7 @@ heart: true
 </br></blockquote>
 
 <center>
-97 年出生，摩羯座
+97 年，摩羯座
 
 贺州学院 - 网络工程
 
