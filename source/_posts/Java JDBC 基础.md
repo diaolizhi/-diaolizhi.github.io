@@ -392,5 +392,7 @@ set character_set_server = utf8;
 "?useUnicode=true&characterEncoding=utf8"
 ```
 
+# 下载连接 MySQL 的 jar 包
 
+[Download mysql-connector-java-5.1.21.jar](http://www.java2s.com/Code/Jar/m/mysql.htm)
 
