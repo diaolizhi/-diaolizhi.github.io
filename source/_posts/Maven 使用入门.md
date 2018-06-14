@@ -4,7 +4,7 @@ date: 2018-06-11
 categories: Maven
 ---
 
-如何手动创建一个 Maven 工程。
+如何创建一个 Maven 工程。
 
 <!--more-->
 
@@ -195,3 +195,12 @@ mvn clean package
 java -jar target\hello-world-1.0-SNAPSHOT.java
 ```
 
+# 使用 Archetype 生成项目骨架
+
+因为装的是 Maven 3，所以直接运行：
+
+```
+mvn archetype:generate
+```
+
+敲两次回车，然后输入 groupId、artifactId、version、package，并按回车确定。
