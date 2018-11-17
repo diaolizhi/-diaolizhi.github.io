@@ -9,7 +9,7 @@ categories: Spring Boot
 
 # 添加依赖
 
-一个很方便的方式是在创建项目的时候就添加 Mybatis 依赖。
+一个很方便的方式是在创建项目的时候就添加 Mybatis 和 Mysql-connector 依赖。
 
 ![](https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/%E5%88%9B%E5%BB%BA%20Spring%20Boot%20%E9%A1%B9%E7%9B%AE%E5%B9%B6%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96.png)
 
@@ -25,29 +25,7 @@ categories: Spring Boot
 </dependency>
 ```
 
-最后还需要添加 Mysql 驱动的依赖：
-
-```xml
-<!-- MySQL的JDBC驱动包 -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <scope>runtime</scope>
-</dependency>
-```
-
-因为 pom.xml 文件中有：
-
-```xml
-<parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.0.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
-</parent>
-```
-
-所以 mysql-connector-java 就不需要手动添加版本号。
+**千万别忽略了 Mysql 驱动的依赖。**
 
 
 
