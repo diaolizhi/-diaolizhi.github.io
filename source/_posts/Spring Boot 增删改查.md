@@ -106,7 +106,8 @@ public class VideoServiceImpl implements VideoService {
 - 接收到参数之后，不是直接交给业务层，而是创建一个对象传递过去
 
 ```java
-@RestController("/api/v1/video")
+@RestController
+@RequestMapping("/api/v1/video")
 public class VideoController {
 
     @Autowired
