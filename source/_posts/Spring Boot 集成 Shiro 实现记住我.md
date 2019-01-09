@@ -13,20 +13,9 @@ categories: Spring Boot
 在 ShiroConfig 类中添加：
 
 ```java
-//注意这里不用加 @Bean 注解
-public SimpleCookie rememberMeCookie(){
-    //        构造方法一定要传一个字符串，作为 Cookies 中的字段名
-    SimpleCookie simpleCookie = new SimpleCookie("RememberMe");
-    //        设置“记住我”多久
-    simpleCookie.setMaxAge(259200);
-
-    return simpleCookie;
-}
-
 @Bean
 public RememberMeManager rememberMeManager(){
     CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-    cookieRememberMeManager.setCookie(rememberMeCookie());
 
     //        rememberme cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位），通过以下代码可以获取
     //        try {
@@ -85,24 +74,4 @@ public Object login(@RequestParam(name = "username") String username,
 
 # 总结
 
-虽然是实现**记住我的功能：**重启浏览器之后可以获取到之前登录的 subject 的名字（使用```subject.getPrincipal();```）。
-
-但是如果给一个 subject 的 session 设置了标签：
-
-```java
-Subject subject = SecurityUtils.getSubject();
-Session session = subject.getSession();
-session.setAttribute("label", "aa");
-```
-
-重启浏览器之后，就获取不到这个标签了。
-
-猜测是超时的问题。
-
-如果使用调用 sessionManager 的 setSessionIdCookie 方法设置 cookie，并设置超时时间，就可以做到重启浏览器之后仍然可以获取到之前设置的标签。
-
-然而，这样做之后，无论登录时*记住我*是真是假，重启浏览器之后都还是记住的。
-
-所以，看起来通过 setSessionIdCookie 可以设置 Sesssion 的 id（就是在浏览器控制台看到的名字），也可以设置超时时间，但是无法和 RememberMe 一起使用。
-
-ps：这就是找不到教程的痛苦，一切都是自己摸索，或者说是猜。
+2019年1月9日 22:18:23 更新
