@@ -30,7 +30,7 @@ groupId 是在 Maven 项目中配置的，所以**它的含义是：当前 Maven
 
 ## artifactId
 
-这个元素配置的就是 **Maven 项目的 id**，推荐的做法是使用实际项目名称作为 artifactId 的前缀，比如 projectA-core。
+这个元素配置的就是 **Maven 项目的 id**，推荐的做法是使用实际项目名称作为 artifactId 的前缀，比如 projectA-core，加前缀的意义是跟其他的项目进行区分，毕竟其他项目也可能会出现 core 这个名字。
 
 ## version
 
@@ -147,7 +147,7 @@ Maven 在编译主项目时使用一套 classpath，编译和测试时使用一�
 
 那么就算当前项目依赖了 projectD，projectE 和 projectF 也**不会**添加到当前项目，换句话说：可选依赖不会传递。
 
-如果需要用到 projectE，就必须显式地声明它的依赖。
+如果需要用到 projectE，就必须**显式地**声明它的依赖。
 
 
 
