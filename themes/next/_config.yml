@@ -7,7 +7,7 @@ favicon: /images/favicon.ico
 
 # Set default keywords (Use a comma to separate)
 keywords: 入门
-description: 
+description:
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
 # Set rss to specific value if you have burned your feed already.
@@ -35,7 +35,7 @@ menu:
   #weblog: /weblog
   #commonweal: /404.html
 
-#themes\next\layout\_partials\header.swig  
+#themes\next\layout\_partials\header.swig
 menu_show:
   home: /
   categories: /categories
@@ -44,7 +44,7 @@ menu_show:
   #guestbook: /guestbook
   about: /about
   #mylove: /mylove
-  
+
 # Enable/Disable menu icons.
 # Icon Mapping:
 #   Map a menu item to a specific FontAwesome icon name.
@@ -93,19 +93,19 @@ font:
   global:
     # external: true will load this font family from host.
     external: true
-    family: 
+    family:
 
   # Font settings for Headlines (h1, h2, h3, h4, h5, h6)
   # Fallback to `global` font settings.
   headings:
     external: true
-    family: 
+    family:
 
   # Font settings for posts
   # Fallback to `global` font settings.
   posts:
     external: true
-    family: 
+    family:
 
   # Font settings for Logo
   # Fallback to `global` font settings.
@@ -253,7 +253,7 @@ mathjax:
 #swiftype_key: 7QGVCpbpTwnwsyJ5DMf3
 
 # Baidu Analytics ID
-#baidu_analytics:
+baidu_analytics: 097ddf3186a1ecd7ec2b4978b813d395
 
 # Duoshuo ShortName
 #duoshuo_shortname:
@@ -404,13 +404,13 @@ js: js
 images: images
 
 #文章末尾版权信息
-copyright: 
+copyright:
   enabled: true
 #本文结束标记
-passage_end_tag:  
+passage_end_tag:
   enabled: false
 # high晃动功能
-highqilai: 
+highqilai:
   enabled: true
 # 右侧悬浮二维码
 mobile_code:
@@ -418,7 +418,7 @@ mobile_code:
   qcode: /images/wuxubj.png
   description: 扫一扫，用手机访问本站
 # 鼠标点击产生心形
-particle: 
+particle:
   enabled: false
 feed:
   type: atom
@@ -426,6 +426,6 @@ feed:
   path: https://www.baidu.com
   limit: 20
   hub:
-  
+
 # Theme version
 version: 5.0.1
