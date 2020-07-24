@@ -1,32 +1,19 @@
 ---
 title: 关于
 date: 2016-05-21 18:19:45
-heart: true
+heart: false
 ---
-<blockquote class="blockquote-center">既然选择了远方，便只顾风雨兼程。
-</br></blockquote>
+# 关于我
+- 97年
+- 广西梧州人
 
-<center>
-97 年，摩羯座
+# 个人经历
+- 2016-2020 [贺州学院](http://www.hzxy.edu.cn/)
+- 2019-至今 [广州云阁科技有限公司](http://yungeio.com)
 
-贺州学院 - 网络工程
+# 联系方式
+- wx: aU5ldmVyOTk2
 
-
-
-
-
-</center>
-
----
-
-
-
->本站基于 [Hexo](http://hexo.io) 的 [NexT.Pisces](https://github.com/iissnan/hexo-theme-next) 主题搭建而成，Copy [wuxubj](https://github.com/wuxubj/wuxubj.github.io)        所使用的主题并稍作修改。非原创文章均带有[转]字标志且会在文中给出原文链接，其他文章均为原创。
-* [关于本站](/about/)
-* Email : [476439123@qq.com](mailto:476439123@qq@qq.com)
-
----
-
-<link rel="stylesheet" href="/css/mycss/underline.css">
-<link rel="stylesheet" href="/css/mycss/guestbook.css">
-<script src="/js/myscript/guestbook.js"></script>
+> 这个博客已经存在好几年了，第一篇文章是 2017 年。到目前为止已经有上百篇文章，但是实际上很多都是上大学时候记的笔记而已。纯粹是笔记，没有自己的理解。</br>
+工作大半年的今天，又想写博客了，与之前相比，我想写些更有意义的东西。这些东西最好可以帮到别人，实在不行，至少对自己有所帮助。</br>
+-- 2020年07月25日01:58:00
