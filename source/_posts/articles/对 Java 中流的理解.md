@@ -39,7 +39,7 @@ OutputStream 也是同样的道理，我往硬盘写数据的时候，硬盘就�
 
 # 常见的类及其描述
 
-#### Some important Byte stream classes.
+## Some important Byte stream classes.
 
 | Stream class             | Description                                                  |
 | ------------------------ | ------------------------------------------------------------ |
@@ -55,7 +55,7 @@ OutputStream 也是同样的道理，我往硬盘写数据的时候，硬盘就�
 
  
 
-#### Some important Charcter stream classes.
+## Some important Charcter stream classes.
 
 | Stream class           | Description                                                  |
 | ---------------------- | ------------------------------------------------------------ |
@@ -70,8 +70,6 @@ OutputStream 也是同样的道理，我往硬盘写数据的时候，硬盘就�
 | **Writer**             | Abstract class that define character stream output           |
 
 具体的类就不研究怎么用了，估计使用得最多的就是 Bufferedxxx 了。
-
-
 
 # 示例
 
