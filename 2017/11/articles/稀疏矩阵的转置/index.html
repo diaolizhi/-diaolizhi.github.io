@@ -1,0 +1,941 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="入门">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+	
+</script>
+
+
+
+<meta name="description" content="数组还能玩出花来.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="稀疏矩阵的转置">
+<meta property="og:url" content="/2017/11/articles/稀疏矩阵的转置/index.html">
+<meta property="og:site_name" content="编程之路">
+<meta property="og:description" content="数组还能玩出花来.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-01T13:59:30.936Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="稀疏矩阵的转置">
+<meta name="twitter:description" content="数组还能玩出花来.">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 稀疏矩阵的转置 | 编程之路  - 编程之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?097ddf3186a1ecd7ec2b4978b813d395";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">编程之路</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle" id="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button onclick="showSubtitle()">
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar-check-o"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search fa-lg"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                稀疏矩阵的转置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-05T00:00:00+08:00" content="2017-11-05">
+              2017-11-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/11/articles/稀疏矩阵的转置/" class="leancloud_visitors" data-flag-title="稀疏矩阵的转置" style="display:none">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>数组还能玩出花来.<br><a id="more"></a></p>
+<h1 id="一-稀疏矩阵的存储"><a href="#一-稀疏矩阵的存储" class="headerlink" title="一. 稀疏矩阵的存储"></a>一. 稀疏矩阵的存储</h1><p>稀疏矩阵顾名思义就是元素很少的矩阵, 如果采取一般的存储方式会导致空间的浪费, 因为要存储很多没有意义的元素.<br>稀疏矩阵存储一个非零元素就要存储这个元素的行列坐标和值(通过结构体实现), 非零元素这么存储, 而整个稀疏矩阵就要存储数组的行数, 列数, 非零元素的个数, 以及非零元素数组.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 12500</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> i, j;    <span class="comment">//非零元素的坐标</span></span><br><span class="line">    ElemType e;    <span class="comment">//非零元素元素的值</span></span><br><span class="line">&#125;Triple;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    Triple data[MAXSIZE+<span class="number">1</span>];    <span class="comment">//非零元素数组, 0 号元素未使用</span></span><br><span class="line">    <span class="keyword">int</span> mu, nu, tu;    <span class="comment">//行数, 列数, 非零元个数</span></span><br><span class="line">&#125;TSMatrix;</span><br></pre></td></tr></table></figure></p>
+<h1 id="二-稀疏矩阵的转置"><a href="#二-稀疏矩阵的转置" class="headerlink" title="二. 稀疏矩阵的转置"></a>二. 稀疏矩阵的转置</h1><p>稀疏矩阵的初始化就不谈了.<br>一般的二维数组的转置: a[i][j] = b[j][i] 即可.<br>如果是稀疏矩阵, 非零元素数组里面的数据可能是这样的: (1,2,12), (1,3,9), (3,1,-3), (3,6,14). 假设把每个元素的坐标交换, 就变成了: (2,1,12), (3,1,9), (1,3,-3), (6,3,14).<br>转置的确是这么干的, 第 i 行 j 列的值转置后就变成了第 j 行 i 列. 问题是这么做了之后, 我原来是一行一行来存储的, 现在存了一个第二行的, 存了一个第三行的, 又存了一个第一行的, 显然乱了.</p>
+<h2 id="转置算法一"><a href="#转置算法一" class="headerlink" title="转置算法一"></a>转置算法一</h2><ul>
+<li>构造新矩阵的时候, 先构造第一行, 然后第二行, 以此类推.</li>
+<li>每构造一行, 我都遍历原来的矩阵, 遇到列数等于我行数的就存起来. 相当于我要构造第一行, 我就找到原数组的第一列, 把这一列的元素以此保存起来. 这样子是为了保证新矩阵的顺序是对的.</li>
+<li>存的时候, 非零元素行变成列, 列变成行, 值相等. 使得 a[i][j] = b[j][i];  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">TransposeSMatrix</span><span class="params">(TSMatrix M, TSMatrix *T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, n;</span><br><span class="line">    T-&gt;tu = M.tu; T-&gt;mu = M.nu; T-&gt;nu = M.mu;    <span class="comment">//新矩阵的行数(列数)=原矩阵的列数(行数), 并且个数相同</span></span><br><span class="line">    <span class="keyword">if</span>(T-&gt;tu)    <span class="comment">//确保原矩阵不为空</span></span><br><span class="line">    &#123;</span><br><span class="line">        n = <span class="number">1</span>;    <span class="comment">//n 是新矩阵非零元素的序号, 从 1 开始(也可以从 0 开始, 并不重要)</span></span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=T-&gt;mu; i++)    <span class="comment">//遍历新矩阵的每一行, 从第一行开始</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">1</span>; j&lt;=M.tu; j++)    <span class="comment">//遍历原数组的每一个元素</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(M.data[j].j == i)    <span class="comment">//遇到原数组 i 列的元素, 就保存起来</span></span><br><span class="line">                &#123;</span><br><span class="line">                    T-&gt;data[n].i = M.data[j].j;    <span class="comment">//行=列</span></span><br><span class="line">                    T-&gt;data[n].j = M.data[j].i;    <span class="comment">//列=行</span></span><br><span class="line">                    T-&gt;data[n].e = M.data[j].e;    <span class="comment">//值相等</span></span><br><span class="line">                    n++;    <span class="comment">//下面准备给新数组的下一个非零元素赋值</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>普通的二维数组转置的时间复杂度是 mu*nu .(也就是行数乘以列数, 因为只要遍历矩阵一遍. 第 i 行 j 列的元素用新矩阵第 j 行 i 列的元素存储即可.)<br>而上面这个算法, 首先遍历原矩阵每一列(也就是新矩阵的每一列) nu, 然后遍历原矩阵 tu. 如果 tu 接近于 mu*nu, 那么时间复杂度就是: O(mu*nu^2), 时间复杂度比一般情况要高, 所以, 这个算法只适用于 tu 远远小于 mu*nu 的情况.</p>
+<h2 id="转置算法二"><a href="#转置算法二" class="headerlink" title="转置算法二"></a>转置算法二</h2><ul>
+<li>先求出原来每一列有多少个元素</li>
+<li>再求出每一列的第一个元素在新矩阵中出现的位置, 很显然, 第一列的第一个元素出现在新矩阵的一号位置. 然后第二列的第一个元素出现在位置是 1 加上第一列元素的个数. 比如第一行有 4 个元素, 1+4=5 , 所以第二列第一个元素的位置就是 5. 此后, 每一列的第一个元素在新矩阵中的位置都等于: 前一列第一个元素的位置加上前一列元素的个数. </li>
+<li>然后从头开始取原矩阵的元素, 看它是第几列的, 我们已经知道某一列的第一个元素应该出现在新矩阵中的什么位置, 所以进行赋值即可, 记得交换行号列号. 同时记录一下, 再次遇到这一列的元素时候, 就放到下一个位置.<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FastTransposeSMatrix</span><span class="params">(TSMatrix M, TSMatrix *T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, n, col;</span><br><span class="line">    T-&gt;tu = M.tu; T-&gt;nu = M.mu; T-&gt;mu = M.nu;</span><br><span class="line">    <span class="keyword">int</span> * num = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*(M.nu+<span class="number">1</span>));    <span class="comment">//动态生成数组, 存储原矩阵每列的元素个数(0 号不使用)</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=M.nu; i++)    num[i] = <span class="number">0</span>;     <span class="comment">//每列元素个数初始化为 0</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=M.tu; i++)    num[M.data[i].j]++;    <span class="comment">//计算出每列有多少个元素</span></span><br><span class="line">    <span class="keyword">int</span> * cpot = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*(M.nu+<span class="number">1</span>));    <span class="comment">//用来存储每列第一个元素在新矩阵中出现的位置的数组</span></span><br><span class="line">    cpot[<span class="number">1</span>] = <span class="number">1</span>;    <span class="comment">//第一列第一个元素肯定是新矩阵的一号元素</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">2</span>; i&lt;=M.nu; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cpot[i] = cpot[i<span class="number">-1</span>] + num[i<span class="number">-1</span>];    <span class="comment">//每列第一个元素的位置都是前一列的位置加上前一列的个数</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=M.tu; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        col = M.data[i].j;    <span class="comment">//遇到某一列的元素</span></span><br><span class="line">        n = cpot[col];        <span class="comment">//看看这一列的元素应该存放到哪一个位置</span></span><br><span class="line">        T-&gt;data[n].i = M.data[i].j;</span><br><span class="line">        T-&gt;data[n].j = M.data[i].i;</span><br><span class="line">        T-&gt;data[n].e = M.data[i].e;</span><br><span class="line">        cpot[col]++;          <span class="comment">//加一是为了: 下次遇到这一列的元素时, 放到下一个位置</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度为 O(nu+tu), 当 tu 和 mu*nu 等数量级的时候, 复杂度为 O(mu*nu), 和经典算法的时间复杂度相同.</p>
+<h1 id="三-完整代码"><a href="#三-完整代码" class="headerlink" title="三. 完整代码"></a>三. 完整代码</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 12500</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> i, j;    <span class="comment">//元素的坐标</span></span><br><span class="line">    ElemType e;    <span class="comment">//元素的值</span></span><br><span class="line">&#125;Triple;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    Triple data[MAXSIZE];    <span class="comment">//非零元素数组, 0 号元素未使用</span></span><br><span class="line">    <span class="keyword">int</span> mu, nu, tu;    <span class="comment">//行数, 列数, 非零元个数</span></span><br><span class="line">&#125;TSMatrix;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">(TSMatrix * TSM)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"输入非零元素的个数, 行数, 列数: \n"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;TSM-&gt;tu, &amp;TSM-&gt;mu, &amp;TSM-&gt;nu);    <span class="comment">//输入非零元素的个数</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=TSM-&gt;tu; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"输入坐标(从 1 开始), 值: \n"</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;TSM-&gt;data[i].i, &amp;TSM-&gt;data[i].j, &amp;TSM-&gt;data[i].e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Show</span><span class="params">(TSMatrix * TSM)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=TSM-&gt;tu; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%-2d %-2d %-2d\n"</span>, TSM-&gt;data[i].i, TSM-&gt;data[i].j, TSM-&gt;data[i].e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">TransposeSMatrix</span><span class="params">(TSMatrix M, TSMatrix *T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, n;</span><br><span class="line">    T-&gt;tu = M.tu; T-&gt;mu = M.nu; T-&gt;nu = M.mu;    <span class="comment">//新矩阵的行数(列数)=原矩阵的列数(行数), 并且个数相同</span></span><br><span class="line">    <span class="keyword">if</span>(T-&gt;tu)    <span class="comment">//确保原矩阵不为空</span></span><br><span class="line">    &#123;</span><br><span class="line">        n = <span class="number">1</span>;    <span class="comment">//n 是新矩阵非零元素的序号, 从 1 开始(也可以从 0 开始, 并不重要)</span></span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=T-&gt;mu; i++)    <span class="comment">//遍历新矩阵的每一行, 从第一行开始</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">1</span>; j&lt;=M.tu; j++)    <span class="comment">//遍历原数组的每一个元素</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(M.data[j].j == i)    <span class="comment">//遇到原数组 i 列的元素, 就保存起来</span></span><br><span class="line">                &#123;</span><br><span class="line">                    T-&gt;data[n].i = M.data[j].j;    <span class="comment">//行=列</span></span><br><span class="line">                    T-&gt;data[n].j = M.data[j].i;    <span class="comment">//列=行</span></span><br><span class="line">                    T-&gt;data[n].e = M.data[j].e;    <span class="comment">//值相等</span></span><br><span class="line">                    n++;    <span class="comment">//下面准备给新数组的下一个非零元素赋值</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FastTransposeSMatrix</span><span class="params">(TSMatrix M, TSMatrix *T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, n, col;</span><br><span class="line">    T-&gt;tu = M.tu; T-&gt;nu = M.mu; T-&gt;mu = M.nu;</span><br><span class="line">    <span class="keyword">int</span> * num = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*(M.nu+<span class="number">1</span>));    <span class="comment">//动态生成数组, 存储原矩阵每列的元素个数(0 号不使用)</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=M.nu; i++)    num[i] = <span class="number">0</span>;     <span class="comment">//每列元素个数初始化为 0</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=M.tu; i++)    num[M.data[i].j]++;    <span class="comment">//计算出每列有多少个元素</span></span><br><span class="line">    <span class="keyword">int</span> * cpot = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*(M.nu+<span class="number">1</span>));    <span class="comment">//用来存储每列第一个元素在新矩阵中出现的位置的数组</span></span><br><span class="line">    cpot[<span class="number">1</span>] = <span class="number">1</span>;    <span class="comment">//第一列第一个元素肯定是新矩阵的一号元素</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">2</span>; i&lt;=M.nu; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cpot[i] = cpot[i<span class="number">-1</span>] + num[i<span class="number">-1</span>];    <span class="comment">//每列第一个元素的位置都是前一列的位置加上前一列的个数</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=M.tu; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        col = M.data[i].j;    <span class="comment">//遇到某一列的元素</span></span><br><span class="line">        n = cpot[col];        <span class="comment">//看看这一列的元素应该存放到哪一个位置</span></span><br><span class="line">        T-&gt;data[n].i = M.data[i].j;</span><br><span class="line">        T-&gt;data[n].j = M.data[i].i;</span><br><span class="line">        T-&gt;data[n].e = M.data[i].e;</span><br><span class="line">        cpot[col]++;          <span class="comment">//加一是为了: 下次遇到这一列的元素时, 放到下一个位置</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    TSMatrix a, b;</span><br><span class="line"></span><br><span class="line">    Init(&amp;a);</span><br><span class="line">    Show(&amp;a);</span><br><span class="line"></span><br><span class="line">    FastTransposeSMatrix(a, &amp;b);</span><br><span class="line">    Show(&amp;b);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>严蔚敏的书是好书, 但是有一点不好: 没有考虑到我的智商.</p>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+    </div>
+	
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/articles/稀疏矩阵乘法/" class="post-nav-title-link" rel="prev" title="稀疏矩阵的乘法">
+                <i class="fa fa-chevron-left"></i> 稀疏矩阵的乘法 
+              </a>
+            
+          </div>
+		  
+		  <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/articles/BF 算法/" class="post-nav-title-link" rel="next" title="BF 算法">
+                BF 算法  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+	
+  </div>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+	  
+      <div class="ds-thread" data-thread-key="2017/11/articles/稀疏矩阵的转置/" data-title="稀疏矩阵的转置" data-url="/2017/11/articles/稀疏矩阵的转置/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DLZ">
+          <p class="site-author-name" itemprop="name">DLZ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/diaolizhi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/diao-li-zhi-79/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+           
+              
+                <span class="links-of-author-item" style="text-align:left">
+                  <a href="/" title="当前站点" target="_blank">当前站点</a>
+                </span>
+              
+            
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-稀疏矩阵的存储"><span class="nav-text">一. 稀疏矩阵的存储</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-稀疏矩阵的转置"><span class="nav-text">二. 稀疏矩阵的转置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#转置算法一"><span class="nav-text">转置算法一</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析"><span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转置算法二"><span class="nav-text">转置算法二</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度分析-1"><span class="nav-text">复杂度分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-完整代码"><span class="nav-text">三. 完整代码</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-pencil-square-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DLZ</span>
+  <!--
+  
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" target="_blank">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div style="padding-top:1px;">
+ <span>鄂ICP备16017973号</span>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </div></footer>
+    
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up fa-2x" title="回到顶部"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zPFLpkVuL8bNpqMl24W0E86i-gzGzoHsz", "YhJrGjyDpGD6a8V2BvhDU0X9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  <script type="text/JavaScript">
+function hideElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="none";
+}
+
+function showElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="block";
+}
+
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+
+  
+  
+
+</body>
+</html>

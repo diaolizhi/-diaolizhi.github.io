@@ -1,0 +1,987 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="入门">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+	
+</script>
+
+
+
+<meta name="description" content="文件的分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言 第十一章 文件">
+<meta property="og:url" content="/2017/05/articles/2017-6-05-605-1/index.html">
+<meta property="og:site_name" content="编程之路">
+<meta property="og:description" content="文件的分类">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-01T13:59:30.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C语言 第十一章 文件">
+<meta name="twitter:description" content="文件的分类">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> C语言 第十一章 文件 | 编程之路  - 编程之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?097ddf3186a1ecd7ec2b4978b813d395";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">编程之路</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle" id="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button onclick="showSubtitle()">
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar-check-o"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search fa-lg"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                C语言 第十一章 文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-06T00:00:00+08:00" content="2017-05-06">
+              2017-05-06
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/C语言/" itemprop="url" rel="index">
+                    <span itemprop="name">C语言</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/05/articles/2017-6-05-605-1/" class="leancloud_visitors" data-flag-title="C语言 第十一章 文件" style="display:none">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="文件的分类"><a href="#文件的分类" class="headerlink" title="文件的分类"></a>文件的分类</h1><a id="more"></a>
+<h2 id="按数据性质分类"><a href="#按数据性质分类" class="headerlink" title="按数据性质分类"></a>按数据性质分类</h2><p>程序文件、数据文件</p>
+<h2 id="按数据的编码方式"><a href="#按数据的编码方式" class="headerlink" title="按数据的编码方式"></a>按数据的编码方式</h2><p>ASCII 文件、二进制文件</p>
+<h1 id="文件指针与文件内部指针"><a href="#文件指针与文件内部指针" class="headerlink" title="文件指针与文件内部指针"></a>文件指针与文件内部指针</h1><p>文件指针 FILE 应该是一个结构体类型，包含文件的各种信息，通过 fopen()赋值。<br>对文件操作时，文件内部也有一个指针，开始时指向最前面，每次读写该指针都会向后移动。</p>
+<h1 id="对文件的操作"><a href="#对文件的操作" class="headerlink" title="对文件的操作"></a>对文件的操作</h1><ul>
+<li>打开</li>
+<li>读写</li>
+<li>关闭</li>
+</ul>
+<h1 id="文件的打开与关闭"><a href="#文件的打开与关闭" class="headerlink" title="文件的打开与关闭"></a>文件的打开与关闭</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FILE * fp;</span><br><span class="line"><span class="keyword">if</span>((fp = fopen(<span class="string">"d:\\a.txt"</span>,wb))==<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"cannot open file strike any key exit"</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用 fopen()函数打开文件，指针文件位置和打开方式。<br>打开方式包括：</p>
+<ul>
+<li>rt 只读 ASCII 码文件</li>
+<li>wt 只写 ASCII 码文件</li>
+<li>at 追加 ASCII 码文件</li>
+<li>rb 只读二进制文件</li>
+<li>wb 只写二进制文件</li>
+<li>ab 追加二进制文件</li>
+<li>rt+ 以读的方式打开 ASCII 码文件，允许写入</li>
+<li>wt+ 以写的方式打开 ASCII 码文件，允许读取</li>
+<li>at+ 以追加的方式打开 ASCII 码文件，允许读写</li>
+<li>rb+ 以读的方式打开二进制文件，允许写入</li>
+<li>wb+ 以写的方式打开二进制文件，允许读取</li>
+<li>ab+ 以追加的方式打开二进制文件，允许读写</li>
+</ul>
+<p>文件的关闭<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fclose(fp);</span><br></pre></td></tr></table></figure></p>
+<h1 id="文件顺序读写"><a href="#文件顺序读写" class="headerlink" title="文件顺序读写"></a>文件顺序读写</h1><p>文件读写函数</p>
+<ul>
+<li>对 ASCII 码文件的读写</li>
+<li><p>fgetc( ) 从文件中读取一个字符</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ch = fgetc(fp);</span><br><span class="line"><span class="keyword">while</span>(ch!=EOF)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">putchar</span>(ch);</span><br><span class="line">    ch = fgetc(fp);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用 fgetc() 读取一个字符，只要读取到的不是 EOF 就继续读取。（EOF 是文件结束标志）</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fputc( ) 向文件中写入一个字符</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ch = getchar(); <span class="comment">//从已经输入的字符串中读取一个字符</span></span><br><span class="line"><span class="keyword">while</span>(ch != <span class="string">'\n'</span>)</span><br><span class="line">&#123;</span><br><span class="line">    fputc(ch, fp);</span><br><span class="line">    ch = getchar();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//只要读取到的字符不是 '\n' 就往下读取</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>fgets( ) 从指定文件读取一个字符串放到字符数组</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fgets(str, <span class="number">5</span>, fp);</span><br><span class="line"><span class="comment">//分别对应字符数组，要读取的字数个数，要读取的文件</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fputs( )</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> st[<span class="number">20</span>];</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">"%s"</span>, st);    <span class="comment">//从键盘输入字符串</span></span><br><span class="line"><span class="built_in">fputs</span>(st, fp);  <span class="comment">//将字符串写入文件中</span></span><br><span class="line"><span class="comment">//fputc 是每次写入一个字符，而 fgets 是写入一个字符串</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对二进制文件的读写</p>
+</li>
+<li><p>fwrite( ) 写数据块</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fwrite(pp, <span class="keyword">sizeof</span>(struct stu), <span class="number">2</span>, fp);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    pp 是结构体数组的首地址，这个位置放的是指针，表示存放输入数据的首地址。</span></span><br><span class="line"><span class="comment">    sizeof(struct stu) 是数据块的字节数</span></span><br><span class="line"><span class="comment">    2 表示要写入的数据块数量，这里的结构体数组有两个元素，所以是 2</span></span><br><span class="line"><span class="comment">    fp 是文件指针</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fread( ) 读数据块</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fread(qq, <span class="keyword">sizeof</span>(struct stu), <span class="number">2</span>, fp);</span><br><span class="line"><span class="comment">//含义与上面相似，qq 也是结构体类型数组。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从文件中读写数据</p>
+</li>
+</ul>
+<p><strong>注意：fscanf 是从文件往内存中发送数据，fprintf 是将内存数据写入文件中，这里是与直觉相反的</strong></p>
+<ul>
+<li><p>fprintf( ) </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">格式：</span><br><span class="line"><span class="built_in">fprintf</span>(文件指针, 格式字符串, 输出表列);</span><br><span class="line">例子：</span><br><span class="line"><span class="built_in">fprintf</span>(fp, <span class="string">"%s%d%d%s"</span>, pp-&gt;name, pp-&gt;num, pp-&gt;age, pp-&gt;addr);</span><br><span class="line"><span class="comment">//pp 是一个结构体指针，pp-&gt;name 等指向了内存中的数据，这条语句是将这些数据写入到文件中。</span></span><br><span class="line"><span class="comment">//注意格式字符串是有双引号的</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fscanf( )</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">格式：</span><br><span class="line"><span class="built_in">fscanf</span>(文件指针, 格式字符串, 输入表列);</span><br><span class="line">例子：</span><br><span class="line"><span class="built_in">fscanf</span>(fp, <span class="string">"%s%d%d%s"</span>, qq-&gt;name, &amp;qq-&gt;name, &amp;qq-&gt;age, qq-&gt;addr);</span><br><span class="line"><span class="comment">//qq 是结构体指针，qq-&gt;name 等是内存中存在的变量。需要注意的是，fscanf 会给内存中变量赋值，所以需要取变量地址</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="其他部分函数"><a href="#其他部分函数" class="headerlink" title="其他部分函数"></a>其他部分函数</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">feof(fp);</span><br><span class="line"><span class="comment">//判断文件是否结束，结束返回 1，否则返回 0；</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rewind(fp);</span><br><span class="line"><span class="comment">//将内部指针指向开头，在对文件进行操作之后，想要读取数据就要重置内部指针</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+    </div>
+	
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/articles/2017-5-05-506-3/" class="post-nav-title-link" rel="prev" title="线性结构笔记（三）">
+                <i class="fa fa-chevron-left"></i> 线性结构笔记（三） 
+              </a>
+            
+          </div>
+		  
+		  <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/articles/2017-5-05-505-1/" class="post-nav-title-link" rel="next" title="记一次观念的改变">
+                记一次观念的改变  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+	
+  </div>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+	  
+      <div class="ds-thread" data-thread-key="2017/05/articles/2017-6-05-605-1/" data-title="C语言 第十一章 文件" data-url="/2017/05/articles/2017-6-05-605-1/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DLZ">
+          <p class="site-author-name" itemprop="name">DLZ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/diaolizhi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/diao-li-zhi-79/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+           
+              
+                <span class="links-of-author-item" style="text-align:left">
+                  <a href="/" title="当前站点" target="_blank">当前站点</a>
+                </span>
+              
+            
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件的分类"><span class="nav-text">文件的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#按数据性质分类"><span class="nav-text">按数据性质分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#按数据的编码方式"><span class="nav-text">按数据的编码方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件指针与文件内部指针"><span class="nav-text">文件指针与文件内部指针</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对文件的操作"><span class="nav-text">对文件的操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件的打开与关闭"><span class="nav-text">文件的打开与关闭</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件顺序读写"><span class="nav-text">文件顺序读写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他部分函数"><span class="nav-text">其他部分函数</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-pencil-square-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DLZ</span>
+  <!--
+  
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" target="_blank">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div style="padding-top:1px;">
+ <span>鄂ICP备16017973号</span>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </div></footer>
+    
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up fa-2x" title="回到顶部"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zPFLpkVuL8bNpqMl24W0E86i-gzGzoHsz", "YhJrGjyDpGD6a8V2BvhDU0X9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  <script type="text/JavaScript">
+function hideElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="none";
+}
+
+function showElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="block";
+}
+
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+
+  
+  
+
+</body>
+</html>

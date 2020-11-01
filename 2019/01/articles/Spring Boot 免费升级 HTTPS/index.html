@@ -1,0 +1,985 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="入门">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+	
+</script>
+
+
+
+<meta name="description" content="有个🔒的感觉就是 8 一样嗷。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot 2.x 免费升级 HTTPS">
+<meta property="og:url" content="/2019/01/articles/Spring Boot 免费升级 HTTPS/index.html">
+<meta property="og:site_name" content="编程之路">
+<meta property="og:description" content="有个🔒的感觉就是 8 一样嗷。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_15-59-34.png">
+<meta property="og:image" content="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_16-18-43.png">
+<meta property="og:image" content="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_16-27-12.png">
+<meta property="og:image" content="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_16-29-44.png">
+<meta property="og:image" content="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_16-31-19.png">
+<meta property="og:image" content="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_17-44-33.png">
+<meta property="og:image" content="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_17-52-02.png">
+<meta property="og:image" content="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_17-55-45.png">
+<meta property="og:updated_time" content="2020-11-01T13:59:30.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Boot 2.x 免费升级 HTTPS">
+<meta name="twitter:description" content="有个🔒的感觉就是 8 一样嗷。">
+<meta name="twitter:image" content="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_15-59-34.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Spring Boot 2.x 免费升级 HTTPS | 编程之路  - 编程之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?097ddf3186a1ecd7ec2b4978b813d395";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">编程之路</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle" id="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button onclick="showSubtitle()">
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar-check-o"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search fa-lg"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring Boot 2.x 免费升级 HTTPS
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-01-02T00:00:00+08:00" content="2019-01-02">
+              2019-01-02
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring Boot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2019/01/articles/Spring Boot 免费升级 HTTPS/" class="leancloud_visitors" data-flag-title="Spring Boot 2.x 免费升级 HTTPS" style="display:none">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>有个🔒的感觉就是 8 一样嗷。</p>
+<a id="more"></a>
+<p>本文只说操作步骤，别的不讲，因为不会。</p>
+<h1 id="必要的前提"><a href="#必要的前提" class="headerlink" title="必要的前提"></a>必要的前提</h1><ul>
+<li>拥有一个域名</li>
+<li>拥有一个 Linux 服务器</li>
+</ul>
+<h1 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h1><p>我是通过 <a href="https://www.youtube.com/watch?v=fL6A9I1-U6M" target="_blank" rel="noopener">Youtube 视频</a> 了解到如何快速免费的申请一个 HTTPS 证书的，推荐大家可以看一哈。</p>
+<p>申请证书的网站是：<a href="https://freessl.cn/" target="_blank" rel="noopener">FreeSSL</a></p>
+<h2 id="进入首页"><a href="#进入首页" class="headerlink" title="进入首页"></a>进入首页</h2><p>需要注意的是：<strong>证书的类型</strong>以及<strong>证书的有效期</strong>，根据个人需要选择。</p>
+<p>我选择的是第二个，因为我需要用到多个二级域名。</p>
+<p>如果只有一个网站，建议选择第一个，因为有效期比较长。</p>
+<p><strong>如果证书到期了，就需要到这个网站再申请一次。</strong></p>
+<p>接下来输入自己的域名，我输入的是：*.ddllzz.xyz</p>
+<p><img src="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_15-59-34.png" alt></p>
+<h2 id="创建证书"><a href="#创建证书" class="headerlink" title="创建证书"></a>创建证书</h2><p>直接输入邮箱然后点击创建即可。</p>
+<p><strong>但是为了安全起见，推荐自己生成 CSR，工具自己去网上搜。</strong></p>
+<p><img src="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_16-18-43.png" alt> </p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>完成上面一步之后可以看到：</p>
+<p><img src="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_16-27-12.png" alt></p>
+<p>此时需要根据上面的提示为自己的域名添加 DNS 解析：</p>
+<p><img src="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_16-29-44.png" alt></p>
+<p>等待一会点击上面图中的“配置完成，检测一下”。</p>
+<p>看到下图说明 OK 了。</p>
+<p><img src="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_16-31-19.png" alt></p>
+<p>再然后点击上图的“点击验证”，得到证书信息：</p>
+<p><img src="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_17-44-33.png" alt></p>
+<p>点击下载证书，记得保管好。</p>
+<h1 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h1><p>刚才下载了证书（下载的是一个压缩包），压缩包里的文件是：full_chain.pem 和 private.key，而我们在 Spring Boot 中需要的是 pkcs12 类型的文件，所以需要用 openssl 进行转换。</p>
+<p><strong>推荐在 Linux 下完成转换，因为我在 Windows 下生成的 private.key 一直是 0kb，同样的操作在 Linux 下就没问题。</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -export -in full_chain.pem -inkey private.key -out keystore.p12（这个是生成的文件名） -name tomacat -CAfile full_chain.pem -caname root</span><br></pre></td></tr></table></figure>
+<p>现在得到了 keystore.p12，就可以在 Spring Boot 项目中使用它了。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>将刚刚得到的 kyestore.p12 文件复制到 Spring Boot 项目中的 resources 目录下，然后在 application.properties 文件中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server.port=8443</span><br><span class="line">server.ssl.trust-store-type=PKCS12</span><br><span class="line">server.ssl.key-store=classpath:kyestore.p12</span><br><span class="line">server.ssl.key-store-password=这里是进行转换时输入的密码</span><br><span class="line">server.ssl.key-alias=tomcat</span><br></pre></td></tr></table></figure>
+<h1 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h1><p>在本地测试时，如果通过 <a href="https://127.0.0.1:8443" target="_blank" rel="noopener">https://127.0.0.1:8443</a> 访问，会提示不安全：</p>
+<p><img src="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_17-52-02.png" alt> </p>
+<p>因为刚才的证书是属于 ddllzz.xyz 这个域名的，但是现在并非通过这个域名访问，所以会提示不安全。</p>
+<p>现在修改本机 hosts 文件，添加一行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 ddllzz.xyz</span><br></pre></td></tr></table></figure>
+<p>再次通过 <a href="https://ddllzz.xyz:8443" target="_blank" rel="noopener">https://ddllzz.xyz:8443</a> 访问就行了:</p>
+<p><img src="https://md-img-1252869657.cos.ap-shanghai.myqcloud.com/hexo/Snipaste_2019-01-02_17-55-45.png" alt></p>
+<h1 id="80-端口重定向到-HTTPS"><a href="#80-端口重定向到-HTTPS" class="headerlink" title="80 端口重定向到 HTTPS"></a>80 端口重定向到 HTTPS</h1><p>在 Spring Boot 中使用下面这段代码，就可以实现：</p>
+<blockquote>
+<p>当访问 ddllzz.xyz 时跳转到 <a href="https://ddllzz.xyz:8443。" target="_blank" rel="noopener">https://ddllzz.xyz:8443。</a></p>
+</blockquote>
+<p>它存在的意义是：别人可能并不知道你 HTTPS 设置的端口，如果没有这个重定向就无法通过 HTTPS 的方式访问了。</p>
+<p>当然了，设置其他端口重定向到 HTTPS 也是可以的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ServletWebServerFactory <span class="title">servletContainer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    TomcatServletWebServerFactory tomcat = <span class="keyword">new</span> TomcatServletWebServerFactory() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">postProcessContext</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">            SecurityConstraint securityConstraint = <span class="keyword">new</span> SecurityConstraint();</span><br><span class="line">            securityConstraint.setUserConstraint(<span class="string">"CONFIDENTIAL"</span>);</span><br><span class="line">            SecurityCollection collection = <span class="keyword">new</span> SecurityCollection();</span><br><span class="line">            collection.addPattern(<span class="string">"/*"</span>);</span><br><span class="line">            securityConstraint.addCollection(collection);</span><br><span class="line">            context.addConstraint(securityConstraint);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    tomcat.addAdditionalTomcatConnectors(redirectConnector());</span><br><span class="line">    <span class="keyword">return</span> tomcat;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> Connector <span class="title">redirectConnector</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Connector connector = <span class="keyword">new</span> Connector(</span><br><span class="line">        TomcatServletWebServerFactory.DEFAULT_PROTOCOL);</span><br><span class="line">    connector.setScheme(<span class="string">"http"</span>);</span><br><span class="line">    connector.setPort(<span class="number">80</span>);</span><br><span class="line">    connector.setSecure(<span class="keyword">false</span>);</span><br><span class="line">    connector.setRedirectPort(<span class="number">8443</span>);</span><br><span class="line">    <span class="keyword">return</span> connector;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://juejin.im/post/5b44b4fef265da0f767530f7" target="_blank" rel="noopener">一文教你将 SpringBoot 网站升级为 HTTPS</a></p>
+<p><a href="https://www.heydari.be/spring-boot-application-secured-by-a-lets-encrypt-certificate/" target="_blank" rel="noopener">Spring Boot Application Secured by Let’s Encrypt Certificate</a></p>
+<p><a href="openssl pkcs12 -export -in crt1 -inkey private.key -out keystore.p12 -name tomcat -CAfile CAcrt -caname root">Spring Boot Secured By Let’s Encrypt</a></p>
+<p><a href="https://github.com/spring-projects/spring-boot/issues/9836" target="_blank" rel="noopener">redirect http to https in Spring boot 2.0.0 M2</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>终于写完了，写了好几个小时。</p>
+<p>比上午第一次弄还要久，不过总算是搞定了，下次再弄应该就不会那么费劲了。</p>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+    </div>
+	
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/articles/GitHub 开放私有仓库/" class="post-nav-title-link" rel="prev" title="GitHub 开放私有仓库">
+                <i class="fa fa-chevron-left"></i> GitHub 开放私有仓库 
+              </a>
+            
+          </div>
+		  
+		  <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/articles/通过表单上传 Blob 对象/" class="post-nav-title-link" rel="next" title="通过表单上传 Blob 对象">
+                通过表单上传 Blob 对象  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+	
+  </div>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+	  
+      <div class="ds-thread" data-thread-key="2019/01/articles/Spring Boot 免费升级 HTTPS/" data-title="Spring Boot 2.x 免费升级 HTTPS" data-url="/2019/01/articles/Spring Boot 免费升级 HTTPS/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DLZ">
+          <p class="site-author-name" itemprop="name">DLZ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/diaolizhi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/diao-li-zhi-79/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+           
+              
+                <span class="links-of-author-item" style="text-align:left">
+                  <a href="/" title="当前站点" target="_blank">当前站点</a>
+                </span>
+              
+            
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#必要的前提"><span class="nav-text">必要的前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#申请证书"><span class="nav-text">申请证书</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进入首页"><span class="nav-text">进入首页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建证书"><span class="nav-text">创建证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证"><span class="nav-text">验证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#转换"><span class="nav-text">转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本地测试"><span class="nav-text">本地测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#80-端口重定向到-HTTPS"><span class="nav-text">80 端口重定向到 HTTPS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-pencil-square-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DLZ</span>
+  <!--
+  
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" target="_blank">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div style="padding-top:1px;">
+ <span>鄂ICP备16017973号</span>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </div></footer>
+    
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up fa-2x" title="回到顶部"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zPFLpkVuL8bNpqMl24W0E86i-gzGzoHsz", "YhJrGjyDpGD6a8V2BvhDU0X9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  <script type="text/JavaScript">
+function hideElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="none";
+}
+
+function showElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="block";
+}
+
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,951 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="入门">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+	
+</script>
+
+
+
+<meta name="description" content="除了三元组之外, 还可以用十字链表存储稀疏矩阵.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="十字链表存储稀疏矩阵">
+<meta property="og:url" content="/2017/11/articles/十字链表存储稀疏矩阵/index.html">
+<meta property="og:site_name" content="编程之路">
+<meta property="og:description" content="除了三元组之外, 还可以用十字链表存储稀疏矩阵.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510235237713&di=c55b3048e0eac5b3c168ef79f6ef1f9e&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3523101907%2C2436196837%26fm%3D214%26gp%3D0.jpg">
+<meta property="og:updated_time" content="2020-11-01T13:59:30.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="十字链表存储稀疏矩阵">
+<meta name="twitter:description" content="除了三元组之外, 还可以用十字链表存储稀疏矩阵.">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510235237713&di=c55b3048e0eac5b3c168ef79f6ef1f9e&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3523101907%2C2436196837%26fm%3D214%26gp%3D0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 十字链表存储稀疏矩阵 | 编程之路  - 编程之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?097ddf3186a1ecd7ec2b4978b813d395";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">编程之路</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle" id="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button onclick="showSubtitle()">
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar-check-o"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search fa-lg"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                十字链表存储稀疏矩阵
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-09T00:00:00+08:00" content="2017-11-09">
+              2017-11-09
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/11/articles/十字链表存储稀疏矩阵/" class="leancloud_visitors" data-flag-title="十字链表存储稀疏矩阵" style="display:none">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>除了三元组之外, 还可以用十字链表存储稀疏矩阵.<br><a id="more"></a></p>
+<h1 id="一-十字链表的本质"><a href="#一-十字链表的本质" class="headerlink" title="一. 十字链表的本质"></a>一. 十字链表的本质</h1><ul>
+<li>首先十字链表有<strong>一行头指针</strong>(RHead), 和<strong>一列头指针</strong>(CHead), 它们都可以保存一个结点的<strong>地址</strong>(PointPtr)</li>
+<li>每个结点保存以下信息: 行号(i), 列号(j), 值(v), 下方结点(down), 右方结点(right)</li>
+<li>初始化的时候, 各头指针的值都是 NULL</li>
+<li>可以把每一行, 每一列都看成是一个<strong>链表</strong></li>
+<li>当插入元素的时候, 假设元素的位置是(i, j), 先确定它在第 i 行链表的位置, 再确定它在第 j 列链表的位置</li>
+<li>这样就构造出了一个十字链表</li>
+</ul>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1510235237713&amp;di=c55b3048e0eac5b3c168ef79f6ef1f9e&amp;imgtype=jpg&amp;src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3523101907%2C2436196837%26fm%3D214%26gp%3D0.jpg" alt></p>
+<h1 id="二-结点和整个矩阵的设计"><a href="#二-结点和整个矩阵的设计" class="headerlink" title="二. 结点和整个矩阵的设计"></a>二. 结点和整个矩阵的设计</h1><h2 id="1-结点的设计"><a href="#1-结点的设计" class="headerlink" title="1. 结点的设计"></a>1. 结点的设计</h2><p>根据每个结点需要保存的信息, 可以知道结点应该如下:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设计结点</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">point</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> i, j, v;    <span class="comment">//行号, 列号, 值</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">point</span> * <span class="title">right</span>, * <span class="title">down</span>;</span>    <span class="comment">//右侧元素, 下方元素</span></span><br><span class="line">&#125;Point, *PointPtr;</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-矩阵的设计"><a href="#2-矩阵的设计" class="headerlink" title="2. 矩阵的设计"></a>2. 矩阵的设计</h2><p>矩阵肯定包括<strong>行数(mu)</strong>, <strong>列数(nu)</strong>, <strong>非零元素个数(tu)</strong>, 而且还需要<strong>一行(RHead)和一列头指针(CHead)</strong>, 每个头指针所包含的元素类型都是一样的, 所以一行和一列头指针可以分别用数组保存起来.</p>
+<p>由于事先不知道数组的长度, 所以这两个数组应该是动态分配的.</p>
+<p>动态分配之后肯定是赋值给指针, 那么是什么类型的指针呢?<br>答案是: 因为元素类型是 PointPtr , 所以是 PointPtr * 类型的.</p>
+<p>那么问题又来了, 为什么元素类型是 PointPtr 的呢?<br>因为结点是 Point 类型的, 而动态分配结点的返回值是 PointPtr 类型的.<br>(头指针保存一个结点的地址, 结点又保存下一个结点的地址)<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> mu, nu, tu;    <span class="comment">//稀疏矩阵的行数, 列数, 元素个数</span></span><br><span class="line">    PointPtr * Rhead, * Chead;    <span class="comment">//两个指针数组</span></span><br><span class="line">&#125;TenList;</span><br></pre></td></tr></table></figure></p>
+<h1 id="三-矩阵的初始化"><a href="#三-矩阵的初始化" class="headerlink" title="三. 矩阵的初始化"></a>三. 矩阵的初始化</h1><h2 id="1-输入矩阵的信息"><a href="#1-输入矩阵的信息" class="headerlink" title="1. 输入矩阵的信息"></a>1. 输入矩阵的信息</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        flag = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"请输入行数, 列数, 非零元素个数: \n"</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;mu, &amp;nu, &amp;tu);</span><br><span class="line">        <span class="comment">//输入行数, 列数, 个数, 保证输入无误</span></span><br><span class="line">        <span class="keyword">if</span>(mu&lt;<span class="number">0</span> || nu&lt;<span class="number">0</span> || tu&lt;<span class="number">0</span> || tu&gt;mu*nu)</span><br><span class="line">        &#123;</span><br><span class="line">            flag = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">while</span>(flag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保存稀疏矩阵的行数, 列数, 非零元素个数</span></span><br><span class="line">    T-&gt;mu = mu;</span><br><span class="line">    T-&gt;nu = nu;</span><br><span class="line">    T-&gt;tu = tu;</span><br></pre></td></tr></table></figure>
+<h2 id="2-初始化各头指针"><a href="#2-初始化各头指针" class="headerlink" title="2. 初始化各头指针"></a>2. 初始化各头指针</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分配两个指针数组</span></span><br><span class="line">T-&gt;Rhead = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(PointPtr)*(mu+<span class="number">1</span>));    <span class="comment">//Rhead 是竖的</span></span><br><span class="line"><span class="keyword">if</span>(!T-&gt;Rhead)    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">T-&gt;Chead = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(PointPtr)*(nu+<span class="number">1</span>));    <span class="comment">//Chead 是横的</span></span><br><span class="line"><span class="keyword">if</span>(!T-&gt;Chead)    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化每个头指针</span></span><br><span class="line"><span class="keyword">for</span>(k=<span class="number">1</span>; k&lt;=mu; k++)</span><br><span class="line">&#123;</span><br><span class="line">    T-&gt;Rhead[k] = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(k=<span class="number">1</span>; k&lt;=nu; k++)</span><br><span class="line">&#123;</span><br><span class="line">    T-&gt;Chead[k] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-插入元素"><a href="#3-插入元素" class="headerlink" title="3. 插入元素"></a>3. 插入元素</h2><p>根据元素个数循环:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(k=<span class="number">1</span>; k&lt;=tu; k++)</span><br></pre></td></tr></table></figure></p>
+<p>然后输入元素, 确保元素的行号, 列号无误之后, 动态分配一个新结点<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;</span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入结点的行号, 列号与值: \n"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;i, &amp;j, &amp;v);</span><br><span class="line">    <span class="comment">//确保行号, 列号无误</span></span><br><span class="line">    <span class="keyword">if</span>(i&lt;=<span class="number">0</span> || j&lt;=<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        flag = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">while</span>(flag);</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态分配一个结点, 并给结点赋值</span></span><br><span class="line">temp = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Point));</span><br><span class="line">temp-&gt;i = i;</span><br><span class="line">temp-&gt;j = j;</span><br><span class="line">temp-&gt;v = v;</span><br></pre></td></tr></table></figure></p>
+<p>至此, 得到了一个新的结点, 然后就到了重点: <strong>在十字链表中插入这个结点</strong>.<br>插入一个结点(i, j), 首先在第 i 行链表中插入, 然后在第 j 列链表中插入. 对我而言还是有点难理解, 但就是这样做的. </p>
+<p>在某一行链表中插入, 有两种情况, 一种是链表还<strong>没有结点</strong>, <strong>直接插入</strong>. 还有一种是链表已经<strong>有了结点</strong>, 在<strong>合适的地方插入</strong>新结点.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//先确定新结点在某一行中的位置</span></span><br><span class="line"><span class="comment">//如果头指针保存的是 NULL, 说明这一行还没有元素, 则进行 if 里面的操作</span></span><br><span class="line"><span class="comment">//如果头指针已经指向某个元素, 并且该元素的列号大于新元素的列号</span></span><br><span class="line"><span class="comment">//说明新元素应该放在它的前面, 同样进行 if 里面的操作 </span></span><br><span class="line"><span class="keyword">if</span>(T-&gt;Rhead[i]==<span class="literal">NULL</span> || T-&gt;Rhead[i]-&gt;j&gt;j)</span><br><span class="line">&#123;</span><br><span class="line">    temp-&gt;right = T-&gt;Rhead[i];    <span class="comment">//新结点指向头结点的所指向的元素</span></span><br><span class="line">    T-&gt;Rhead[i] = temp;    <span class="comment">//头结点就指向新结点</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//如果新结点不是插在行首, 那么就寻找合适的位置</span></span><br><span class="line">    <span class="comment">//从行首元素开始查看, 如果遍历到了行尾就插在最后</span></span><br><span class="line">    <span class="comment">//遍历的过程中如果发现某个元素的下一个元素的列号比新结点的小</span></span><br><span class="line">    <span class="comment">//那么就插在这两个元素中间</span></span><br><span class="line">    <span class="comment">//插入的方式都是: 新结点的右指针等于 p 元素的右指针</span></span><br><span class="line">    <span class="comment">//然后 p 元素的右指针等于新结点, 完成插入</span></span><br><span class="line">    <span class="keyword">for</span>(p=T-&gt;Rhead[i]; p-&gt;right!=<span class="literal">NULL</span>&amp;&amp;p-&gt;right-&gt;j&lt;j; p=p-&gt;right);</span><br><span class="line">    temp-&gt;right = p-&gt;right;</span><br><span class="line">    p-&gt;right = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在某一列中插入结点的方法跟上面很相似:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(T-&gt;Chead[j]==<span class="literal">NULL</span> || T-&gt;Chead[j]-&gt;i&gt;i)</span><br><span class="line">        &#123;</span><br><span class="line">            temp-&gt;down = T-&gt;Chead[j];</span><br><span class="line">            T-&gt;Chead[j] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(p=T-&gt;Chead[j]; p-&gt;down!=<span class="literal">NULL</span> &amp;&amp; p-&gt;down-&gt;i&lt;i; p=p-&gt;down);</span><br><span class="line">            temp-&gt;down = p-&gt;down;</span><br><span class="line">            p-&gt;down = temp;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="四-完整代码"><a href="#四-完整代码" class="headerlink" title="四. 完整代码"></a>四. 完整代码</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//设计结点</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">point</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> i, j, v;    <span class="comment">//行号, 列号, 值</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">point</span> * <span class="title">right</span>, * <span class="title">down</span>;</span>    <span class="comment">//右侧元素, 下方元素</span></span><br><span class="line">&#125;Point, *PointPtr;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//首先数组的元素保存的是结点的地址(结点是动态分配的, 通过地址来访问)</span></span><br><span class="line"><span class="comment">//数组元素是 PointPtr, 而这个数组又是动态分配的(因为事先不知道数组有多长), 动态分配返回的类型应该是 PointPtr *.</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> mu, nu, tu;    <span class="comment">//稀疏矩阵的行数, 列数, 元素个数</span></span><br><span class="line">    PointPtr * Rhead, * Chead;    <span class="comment">//一行头指针, 一列头指针, 它们都是两个数组</span></span><br><span class="line">&#125;TenList;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CreateTenList</span><span class="params">(TenList * T)</span></span>;    <span class="comment">//创建十字链表</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintTenList</span><span class="params">(TenList * T)</span></span>;    <span class="comment">//输出非零元素的位置与值</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    TenList T;</span><br><span class="line">    CreateTenList(&amp;T);</span><br><span class="line">    PrintTenList(&amp;T);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CreateTenList</span><span class="params">(TenList * T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mu, nu, tu, flag, k, i, j, v;</span><br><span class="line">    <span class="comment">//mu:行数; nu:列数; tu:个数; flag:保证输入无误; k:用于循环; i,j,v:元素的行号, 列号, 值</span></span><br><span class="line">    PointPtr temp, p;</span><br><span class="line">    <span class="comment">//temp:新结点; P:用来遍历链表的行或列</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        flag = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"请输入行数, 列数, 非零元素个数: \n"</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;mu, &amp;nu, &amp;tu);</span><br><span class="line">        <span class="comment">//输入行数, 列数, 个数, 保证输入无误</span></span><br><span class="line">        <span class="keyword">if</span>(mu&lt;<span class="number">0</span> || nu&lt;<span class="number">0</span> || tu&lt;<span class="number">0</span> || tu&gt;mu*nu)</span><br><span class="line">        &#123;</span><br><span class="line">            flag = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">while</span>(flag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保存稀疏矩阵的行数, 列数, 非零元素个数</span></span><br><span class="line">    T-&gt;mu = mu;</span><br><span class="line">    T-&gt;nu = nu;</span><br><span class="line">    T-&gt;tu = tu;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//分配一行/列头指针</span></span><br><span class="line">    T-&gt;Rhead = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(PointPtr)*(mu+<span class="number">1</span>));    <span class="comment">//Rhead 是竖的</span></span><br><span class="line">    <span class="keyword">if</span>(!T-&gt;Rhead)    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    T-&gt;Chead = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(PointPtr)*(nu+<span class="number">1</span>));    <span class="comment">//Chead 是横的</span></span><br><span class="line">    <span class="keyword">if</span>(!T-&gt;Chead)    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//初始化每个头指针</span></span><br><span class="line">    <span class="keyword">for</span>(k=<span class="number">1</span>; k&lt;=mu; k++)</span><br><span class="line">    &#123;</span><br><span class="line">        T-&gt;Rhead[k] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(k=<span class="number">1</span>; k&lt;=nu; k++)</span><br><span class="line">    &#123;</span><br><span class="line">        T-&gt;Chead[k] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//输入结点, 并插入矩阵中</span></span><br><span class="line">    <span class="keyword">for</span>(k=<span class="number">1</span>; k&lt;=tu; k++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">do</span></span><br><span class="line">        &#123;</span><br><span class="line">            flag = <span class="number">0</span>;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"请输入结点的行号, 列号与值: \n"</span>);</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;i, &amp;j, &amp;v);</span><br><span class="line">            <span class="comment">//确保行号, 列号无误</span></span><br><span class="line">            <span class="keyword">if</span>(i&lt;=<span class="number">0</span> || j&lt;=<span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                flag = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">while</span>(flag);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//动态分配一个结点, 并给结点赋值</span></span><br><span class="line">        temp = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Point));</span><br><span class="line">        temp-&gt;i = i;</span><br><span class="line">        temp-&gt;j = j;</span><br><span class="line">        temp-&gt;v = v;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//先确定新结点在行中的位置</span></span><br><span class="line">        <span class="comment">//如果头指针保存的是 NULL, 说明这一行还没有元素, 则进行以下操作</span></span><br><span class="line">        <span class="comment">//如果头指针指向某个元素, 并且该元素的列号大于新元素的列号</span></span><br><span class="line">        <span class="comment">//说明新元素应该放在它的前面, 同样进行以下操作 </span></span><br><span class="line">        <span class="keyword">if</span>(T-&gt;Rhead[i]==<span class="literal">NULL</span> || T-&gt;Rhead[i]-&gt;j&gt;j)</span><br><span class="line">        &#123;</span><br><span class="line">            temp-&gt;right = T-&gt;Rhead[i];    <span class="comment">//新结点指向头结点的所指向的元素</span></span><br><span class="line">            T-&gt;Rhead[i] = temp;    <span class="comment">//头结点就指向新结点</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//如果新结点不是插在行首, 那么就寻找合适的位置</span></span><br><span class="line">            <span class="comment">//从行首元素开始查看, 如果遍历到了行尾就插在最后</span></span><br><span class="line">            <span class="comment">//遍历的过程中如果发现某个元素的下一个元素的列号比新结点的小</span></span><br><span class="line">            <span class="comment">//那么就插在这两个元素中间</span></span><br><span class="line">            <span class="comment">//插入过程都是 新结点的右指针等于 p 元素的右指针</span></span><br><span class="line">            <span class="comment">//然后 p 元素的右指针等于新结点, 完成插入</span></span><br><span class="line">            <span class="keyword">for</span>(p=T-&gt;Rhead[i]; p-&gt;right!=<span class="literal">NULL</span>&amp;&amp;p-&gt;right-&gt;j&lt;j; p=p-&gt;right);</span><br><span class="line">            temp-&gt;right = p-&gt;right;</span><br><span class="line">            p-&gt;right = temp;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(T-&gt;Chead[j]==<span class="literal">NULL</span> || T-&gt;Chead[j]-&gt;i&gt;i)</span><br><span class="line">        &#123;</span><br><span class="line">            temp-&gt;down = T-&gt;Chead[j];</span><br><span class="line">            T-&gt;Chead[j] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(p=T-&gt;Chead[j]; p-&gt;down!=<span class="literal">NULL</span> &amp;&amp; p-&gt;down-&gt;i&lt;i; p=p-&gt;down);</span><br><span class="line">            temp-&gt;down = p-&gt;down;</span><br><span class="line">            p-&gt;down = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintTenList</span><span class="params">(TenList * T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    PointPtr temp;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=T-&gt;mu; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        temp = T-&gt;Rhead[i];</span><br><span class="line">        <span class="keyword">while</span>(temp!=<span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%2d %2d %2d\n"</span>, temp-&gt;i, temp-&gt;j, temp-&gt;v);</span><br><span class="line">            temp = temp-&gt;right;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="五-参考文章"><a href="#五-参考文章" class="headerlink" title="五. 参考文章"></a>五. 参考文章</h1><blockquote>
+<p><a href="http://blog.csdn.net/zhuyi2654715/article/details/6729783" target="_blank" rel="noopener">稀疏矩阵的十字链表存储的思路</a></p>
+</blockquote>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+    </div>
+	
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/articles/线索二叉树/" class="post-nav-title-link" rel="prev" title="线索二叉树">
+                <i class="fa fa-chevron-left"></i> 线索二叉树 
+              </a>
+            
+          </div>
+		  
+		  <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/articles/特殊矩阵的压缩存储/" class="post-nav-title-link" rel="next" title="特殊矩阵的压缩存储">
+                特殊矩阵的压缩存储  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+	
+  </div>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+	  
+      <div class="ds-thread" data-thread-key="2017/11/articles/十字链表存储稀疏矩阵/" data-title="十字链表存储稀疏矩阵" data-url="/2017/11/articles/十字链表存储稀疏矩阵/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DLZ">
+          <p class="site-author-name" itemprop="name">DLZ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/diaolizhi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/diao-li-zhi-79/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+           
+              
+                <span class="links-of-author-item" style="text-align:left">
+                  <a href="/" title="当前站点" target="_blank">当前站点</a>
+                </span>
+              
+            
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-十字链表的本质"><span class="nav-text">一. 十字链表的本质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-结点和整个矩阵的设计"><span class="nav-text">二. 结点和整个矩阵的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-结点的设计"><span class="nav-text">1. 结点的设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-矩阵的设计"><span class="nav-text">2. 矩阵的设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-矩阵的初始化"><span class="nav-text">三. 矩阵的初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-输入矩阵的信息"><span class="nav-text">1. 输入矩阵的信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-初始化各头指针"><span class="nav-text">2. 初始化各头指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-插入元素"><span class="nav-text">3. 插入元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四-完整代码"><span class="nav-text">四. 完整代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五-参考文章"><span class="nav-text">五. 参考文章</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-pencil-square-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DLZ</span>
+  <!--
+  
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" target="_blank">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div style="padding-top:1px;">
+ <span>鄂ICP备16017973号</span>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </div></footer>
+    
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up fa-2x" title="回到顶部"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zPFLpkVuL8bNpqMl24W0E86i-gzGzoHsz", "YhJrGjyDpGD6a8V2BvhDU0X9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  <script type="text/JavaScript">
+function hideElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="none";
+}
+
+function showElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="block";
+}
+
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+
+  
+  
+
+</body>
+</html>

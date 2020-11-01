@@ -1,0 +1,1052 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="入门">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+	
+</script>
+
+
+
+<meta name="description" content="这次作业写了两次, 仍然不知所云.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置交换机安全功能">
+<meta property="og:url" content="/2017/09/articles/配置交换机安全功能/index.html">
+<meta property="og:site_name" content="编程之路">
+<meta property="og:description" content="这次作业写了两次, 仍然不知所云.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-01T13:59:30.939Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="配置交换机安全功能">
+<meta name="twitter:description" content="这次作业写了两次, 仍然不知所云.">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 配置交换机安全功能 | 编程之路  - 编程之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?097ddf3186a1ecd7ec2b4978b813d395";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">编程之路</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle" id="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button onclick="showSubtitle()">
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar-check-o"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search fa-lg"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                配置交换机安全功能
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-17T00:00:00+08:00" content="2017-09-17">
+              2017-09-17
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/路由交换技术/" itemprop="url" rel="index">
+                    <span itemprop="name">路由交换技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/09/articles/配置交换机安全功能/" class="leancloud_visitors" data-flag-title="配置交换机安全功能" style="display:none">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这次作业写了两次, 仍然不知所云.<br><a id="more"></a></p>
+<h1 id="一-路由器的基本配置"><a href="#一-路由器的基本配置" class="headerlink" title="一. 路由器的基本配置"></a>一. 路由器的基本配置</h1><ul>
+<li><p>配置设备名称</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Router(config)#hostname R1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>禁用 DNS 查找</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">R1(config)#no ip domain-lookup</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按照地址分配表所示配置接口 IP 地址</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">R1(config-if)#ip address 172.16.99.1 255.255.255.0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定 class 作为特权 EXEC 模式密码。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">R1(config)#enable password class</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定 cisco 作为控制台和 vty 密码并启用登录</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">R1(config)# line con 0</span><br><span class="line">R1(config-line)# password cisco</span><br><span class="line">R1(config-line)# login</span><br><span class="line">R1(config-line)# logging synchronous</span><br><span class="line"></span><br><span class="line">R1(config)# line vty 0 15</span><br><span class="line">R1(config-line)# password cisco</span><br><span class="line">R1(config-line)# login</span><br><span class="line">R1(config-line)# end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>加密明文密码。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">R1(config)# service password-encryption</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将运行配置保存到启动配置。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">R1#copy running-config startup-config</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="二-交换机的基本配置"><a href="#二-交换机的基本配置" class="headerlink" title="二. 交换机的基本配置"></a>二. 交换机的基本配置</h1><ul>
+<li><p>a. 配置设备名称。</p>
+</li>
+<li><p>b. 禁用 DNS 查找。</p>
+</li>
+<li><p>c. 指定 class 作为特权 EXEC 模式密码。</p>
+</li>
+<li><p>d. 指定 cisco 作为控制台和 vty 密码，然后启用登录。</p>
+</li>
+<li><p>e. 使用 R1 的 IP 地址配置 S1 的默认网关。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1(config)#ip default-gateway 172.16.99.1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>f. 加密明文密码</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1(config)# service password-encryption</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>g. 将运行配置保存到启动配置。</p>
+</li>
+<li><p>h. 在交换机上创建 VLAN 99 并将其命名为 Management。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">S1(config)# vlan 99//建立vlan99</span><br><span class="line">S1(config-vlan)# name Management//把vlan99命名为“Management”</span><br><span class="line">S1(config-vlan)# exit</span><br><span class="line">S1(config)#</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>i. 按照地址分配表所示，配置 VLAN 99 管理接口的 IP 地址，并启用接口。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">S1(config)# interface vlan 99</span><br><span class="line">S1(config-if)# ip address 172.16.99.11 255.255.255.0</span><br><span class="line">S1(config-if)# no shutdown</span><br><span class="line">S1(config-if)# end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>j. 在交换机上，将端口 F0/5 和 F0/6 分配给 VLAN 99。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">S1# config t</span><br><span class="line">S1(config)# interface f0/5      //进入f0/5接口</span><br><span class="line">S1(config-if)# switchport mode access       //把f0/5接口的模式设置为access</span><br><span class="line">S1(config-if)# switchport access vlan 99        //把端口f0/5划分到vlan 99</span><br><span class="line">S1(config-if)# interface f0/6</span><br><span class="line">S1(config-if)# switchport mode access</span><br><span class="line">S1(config-if)# switchport access vlan 99</span><br><span class="line">S1(config-if)# end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="三-配置交换机的-SSH-访问"><a href="#三-配置交换机的-SSH-访问" class="headerlink" title="三. 配置交换机的 SSH 访问"></a>三. 配置交换机的 SSH 访问</h1><h2 id="第-1-步-在-S1-上配置-SSH-访问。"><a href="#第-1-步-在-S1-上配置-SSH-访问。" class="headerlink" title="第 1 步: 在 S1 上配置 SSH 访问。"></a>第 1 步: 在 S1 上配置 SSH 访问。</h2><ul>
+<li><p>a. 在 S1 上启用 SSH。在全局配置模式下，创建 CCNA-Lab.com 域名。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1(config)# ip domain-name CCNA-Lab.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>b. 创建一个本地用户数据库条目，在通过 SSH连接交换机时使用。该用户应具有管理员级别的访问权限。<br>注意：此处所用密码并不是一个强密码。它仅用于实验目的。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1(config)# username admin privilege 15 secret sshadmin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>c. 配置 vty 线路的 transport  input，以便仅允许 SSH 连接，并使用本地数据库进行身份验证。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">S1(config)# line vty 0 15</span><br><span class="line">S1(config-line)# transport input ssh</span><br><span class="line">S1(config-line)# login local</span><br><span class="line">S1(config-line)# exit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>d. 使用系数 1024 位，生成 RSA 加密密钥</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">S1(config)#crypto key generate rsa </span><br><span class="line">The name for the keys will be: S1.CCNA-Lab.com</span><br><span class="line">Choose the size of the key modulus in the range of 360 to 2048 for your</span><br><span class="line">General Purpose Keys. Choosing a key modulus greater than 512 may take</span><br><span class="line">a few minutes.</span><br><span class="line">How many bits in the modulus [512]: 1024</span><br><span class="line">% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]</span><br><span class="line">S1(config)#</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>e. 检验 SSH 配置</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1# show ip ssh</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="第-2-步-修改-S1-的-SSH-配置"><a href="#第-2-步-修改-S1-的-SSH-配置" class="headerlink" title="第 2 步: 修改 S1 的 SSH 配置"></a>第 2 步: 修改 S1 的 SSH 配置</h2><ul>
+<li>.  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">S1# config  t</span><br><span class="line">S1(config)# ip ssh time-out 75     //超时设置</span><br><span class="line">S1(config)# ip ssh authentication-retries 2     //身份验证</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="第-3-步-检验-S1-上的-SSH-配置。"><a href="#第-3-步-检验-S1-上的-SSH-配置。" class="headerlink" title="第 3 步: 检验 S1 上的 SSH 配置。"></a>第 3 步: 检验 S1 上的 SSH 配置。</h2><ul>
+<li><p>a.  使用 PC-A 上的 SSH 客户端软件连接命令提示符下ssh连接的命令为：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;ssh -l admin 172.16.99.11</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>b. 键入 exit 结束 S1 上的 SSH 会话。</p>
+</li>
+</ul>
+<h1 id="四-配置交换机安全功能"><a href="#四-配置交换机安全功能" class="headerlink" title="四. 配置交换机安全功能"></a>四. 配置交换机安全功能</h1><ul>
+<li><p>查看交换机端口状态</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1# show ip interface brief</span><br></pre></td></tr></table></figure>
+<p>  查看哪些端口未使用</p>
+</li>
+<li><p>关闭交换机上所有未使用的物理端口</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">S1(config)# interface range f0/1 – 4</span><br><span class="line">S1(config-if-range)# shutdown//关闭某个端口就是进入该端口，然后执行shutdown命令即可</span><br><span class="line">S1(config-if-range)# interface range f0/7 – 24</span><br><span class="line">S1(config-if-range)# shutdown</span><br><span class="line">S1(config-if-range)# interface range g0/1 – 2</span><br><span class="line">S1(config-if-range)# shutdown</span><br><span class="line">S1(config-if-range)# end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>记录路由器 G0/1 端口 MAC 地址</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">R1# show interface g0/1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看交换机 MAC 表</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1(config)# show mac address-table</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置基本端口安全。(注意：通常会在交换机的所有接入端口上执行此步骤。此处的 F0/5 是一个示例。)</p>
+<ul>
+<li><p>1) 从 S1 的 CLI，进入与 R1 连接的端口的接口配置模式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1(config)# interface f0/5</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2) 关闭端口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1(config-if)# shutdown</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3) 在 F0/5 上启用端口安全。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1(config-if)# switchport port-security</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4) 为第 2a 步中记录的 R1 G0/1 接口的 MAC 地址配置一个静态条目。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S1(config-if)# switchport port-security mac-address xxxx.xxxx.xxxx</span><br></pre></td></tr></table></figure>
+<p>（xxxx.xxxx.xxxx 是路由器 G0/1 接口的实际 MAC 地址）</p>
+</li>
+<li>5) 启用交换机端口。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S1(config-if)# no shutdown</span><br><span class="line">S1(config-if)# end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>检查配置</p>
+<ul>
+<li><p>修改路由器 MAC 地址</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">R1# config t</span><br><span class="line">R1(config)# interface g0/1</span><br><span class="line">R1(config-if)# shutdown</span><br><span class="line">//使用地址 aaaa.bbbb.cccc，为接口配置一个新的 MAC 地址。</span><br><span class="line">R1(config-if)# mac-address aaaa.bbbb.cccc</span><br><span class="line">R1(config-if)# no shutdown</span><br></pre></td></tr></table></figure>
+<p>  此时路由器就 ping 不通交换机了</p>
+</li>
+<li><p>删除路由器的 MAC 地址</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">R1# config t</span><br><span class="line">R1(config)# interface g0/1</span><br><span class="line">R1(config-if)# shutdown</span><br><span class="line">R1(config-if)# no mac-address aaaa.bbbb.cccc</span><br><span class="line">R1(config-if)# no shutdown</span><br></pre></td></tr></table></figure>
+<p>  此时可能还是 ping 不通</p>
+</li>
+<li><p>清除 S1 F0/5 的错误禁用状态。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">S1# config t</span><br><span class="line">S1(config)# interface f0/5</span><br><span class="line">S1(config-if)# shutdown</span><br><span class="line">S1(config-if)# no shutdown</span><br></pre></td></tr></table></figure>
+<p>  此时应该可以了</p>
+<p>我的理解是: 对于某个端口而言, 只允许指定的设备连接. </p>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+    </div>
+	
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/articles/数据结构之串/" class="post-nav-title-link" rel="prev" title="数据结构之串">
+                <i class="fa fa-chevron-left"></i> 数据结构之串 
+              </a>
+            
+          </div>
+		  
+		  <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/articles/C++ 类的静态成员/" class="post-nav-title-link" rel="next" title="C++ 类的静态成员">
+                C++ 类的静态成员  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+	
+  </div>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+	  
+      <div class="ds-thread" data-thread-key="2017/09/articles/配置交换机安全功能/" data-title="配置交换机安全功能" data-url="/2017/09/articles/配置交换机安全功能/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DLZ">
+          <p class="site-author-name" itemprop="name">DLZ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/diaolizhi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/diao-li-zhi-79/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+           
+              
+                <span class="links-of-author-item" style="text-align:left">
+                  <a href="/" title="当前站点" target="_blank">当前站点</a>
+                </span>
+              
+            
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-路由器的基本配置"><span class="nav-text">一. 路由器的基本配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-交换机的基本配置"><span class="nav-text">二. 交换机的基本配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-配置交换机的-SSH-访问"><span class="nav-text">三. 配置交换机的 SSH 访问</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第-1-步-在-S1-上配置-SSH-访问。"><span class="nav-text">第 1 步: 在 S1 上配置 SSH 访问。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第-2-步-修改-S1-的-SSH-配置"><span class="nav-text">第 2 步: 修改 S1 的 SSH 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第-3-步-检验-S1-上的-SSH-配置。"><span class="nav-text">第 3 步: 检验 S1 上的 SSH 配置。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四-配置交换机安全功能"><span class="nav-text">四. 配置交换机安全功能</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-pencil-square-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DLZ</span>
+  <!--
+  
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" target="_blank">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div style="padding-top:1px;">
+ <span>鄂ICP备16017973号</span>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </div></footer>
+    
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up fa-2x" title="回到顶部"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zPFLpkVuL8bNpqMl24W0E86i-gzGzoHsz", "YhJrGjyDpGD6a8V2BvhDU0X9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  <script type="text/JavaScript">
+function hideElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="none";
+}
+
+function showElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="block";
+}
+
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+
+  
+  
+
+</body>
+</html>

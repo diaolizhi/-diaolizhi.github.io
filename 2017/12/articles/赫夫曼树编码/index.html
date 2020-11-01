@@ -1,0 +1,938 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="入门">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+	
+</script>
+
+
+
+<meta name="description" content="一棵树是如何跟编码联系起来的呢?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="赫夫曼树编码">
+<meta property="og:url" content="/2017/12/articles/赫夫曼树编码/index.html">
+<meta property="og:site_name" content="编程之路">
+<meta property="og:description" content="一棵树是如何跟编码联系起来的呢?">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-01T13:59:30.938Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="赫夫曼树编码">
+<meta name="twitter:description" content="一棵树是如何跟编码联系起来的呢?">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 赫夫曼树编码 | 编程之路  - 编程之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?097ddf3186a1ecd7ec2b4978b813d395";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">编程之路</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle" id="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button onclick="showSubtitle()">
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar-check-o"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search fa-lg"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                赫夫曼树编码
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-02T00:00:00+08:00" content="2017-12-02">
+              2017-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/12/articles/赫夫曼树编码/" class="leancloud_visitors" data-flag-title="赫夫曼树编码" style="display:none">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一棵树是如何跟编码联系起来的呢?<br><a id="more"></a></p>
+<p>前一篇讲了赫夫曼树可以得到最优的编码, 也说了给定叶子结点之后, 如何构造出一棵赫夫曼树, 但是还没有说赫夫曼树是如何跟编码联系起来的.</p>
+<h1 id="一-赫夫曼树与编码的关系"><a href="#一-赫夫曼树与编码的关系" class="headerlink" title="一. 赫夫曼树与编码的关系"></a>一. 赫夫曼树与编码的关系</h1><p>当我们要对一系列字符进行编码, 首先根据字符出现的频率构造一棵赫夫曼树, 然后规定: <strong>从根结点开始, 往左走一步编码添加一个 1, 往右走编码添加一个 0, 一直到叶子结点.</strong></p>
+<p>将每个叶子结点都进行这样的操作, 就得到了它们对应的编码.<br>(此处并没有证明为什么赫夫曼树编码是最优的, 因为我看不懂文档上面说的.)</p>
+<h1 id="二-赫夫曼树编码的算法"><a href="#二-赫夫曼树编码的算法" class="headerlink" title="二. 赫夫曼树编码的算法"></a>二. 赫夫曼树编码的算法</h1><p>直觉上应该是从上往下, 将 0 或 1 拼凑起来, 但是貌似先中后序遍历和层次遍历都没办法依次遍历到每个叶子结点(至少我是不知道.)</p>
+<p>所以赫夫曼树编码的算法是从叶子结点开始的, 往上走求出赫夫曼编码的. </p>
+<p>(没办法从根节点按顺序的走到叶子结点, 但是通过赫夫曼树的前 N 个元素, 我们可以直接访问到叶子结点, 而且通过找双亲, 肯定能够走回根节点的, 这样就得到了完整的编码)</p>
+<p>两个点:</p>
+<ul>
+<li><p>从下往上得到的是倒过来的编码, 如何得到正确的编码呢?<br>实际的代码中, 添加一个 0 或 1 都是在末尾添加, 这样到最后得到的其实是正确的编码.</p>
+</li>
+<li><p>怎么知道当前结点是左分支还是右分支?<br>在赫夫曼树中, 可以访问到双亲结点, 看看当前结点是否等于双亲结点的左孩子, 是的话就是左分支, 反之是右分支.</p>
+</li>
+</ul>
+<h1 id="三-赫夫曼树编码代码"><a href="#三-赫夫曼树编码代码" class="headerlink" title="三. 赫夫曼树编码代码"></a>三. 赫夫曼树编码代码</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过编码之后, 每个字符得到其对应编码, 这些编码是 0 和 1 组成的字符串.</span></span><br><span class="line"><span class="comment">//所以这里用字符指针数组来保存这些字符串</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> * HuffmanCode[N+<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CrtHuffmanCode</span><span class="params">(HuffmanTree ht, HuffmanCode hc, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//传入赫夫曼树, 存储赫夫曼编码的数组, 需要编码的个数</span></span><br><span class="line">    <span class="keyword">int</span> i, c, p, start;</span><br><span class="line">    <span class="keyword">char</span> * cd;<span class="comment">/*cd 作为临时指针, 指向编码过程中得到的字符串*/</span></span><br><span class="line">    cd = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>((n+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));<span class="comment">/*光有一个指针只能存一个地址, 字符串都没地方放, 所以需要动态分配一块内存存放字符串(n 个字符是有备无患的意思吗???)*/</span></span><br><span class="line">    cd[n] = <span class="string">'\0'</span>;<span class="comment">/*最后一位添加一个字符串结束标志*/</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/*从赫夫曼树第一个元素开始(1-n 存储的是叶子结点), c 指向当前结点, p 指向双亲结点*/</span></span><br><span class="line">        c = i;</span><br><span class="line">        p = ht[i].parent;</span><br><span class="line">        start = n;<span class="comment">/*start 是 cd 指向的数组的内部指针*/</span></span><br><span class="line">        <span class="keyword">while</span>(p!=<span class="number">0</span>)<span class="comment">/*只要当前结点不是根节点(只有根节点的双亲为 0), 就一直循环*/</span></span><br><span class="line">        &#123;</span><br><span class="line">            start--;</span><br><span class="line">            <span class="keyword">if</span>(ht[p].LChild == c)<span class="comment">/*如果双亲的左孩子指向当前结点, 说明往左走走到当前结点.(c 是一个数组下标)*/</span></span><br><span class="line">            &#123;</span><br><span class="line">                cd[start] = <span class="string">'1'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                cd[start] = <span class="string">'0'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/*向上移动*/</span></span><br><span class="line">            c = p;</span><br><span class="line">            p = ht[p].parent;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*得到某个叶子结点的编码之后, 为其指针分配内存空间(长度根据实际情况决定)*/</span></span><br><span class="line">        hc[i] = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>((n+<span class="number">1</span>-start)*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">        <span class="built_in">strcpy</span>(hc[i], &amp;cd[start]);<span class="comment">/*取 start 位置的字符的指针, 通过 strcpy 复制*/</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">下面这个代码有逻辑错误, 在判断之前 start 就已经指向下一个位置.</span></span><br><span class="line"><span class="comment">循环结束时, start 指向的不是编码结果的第一个字符, 而是前一个.</span></span><br><span class="line"><span class="comment">这样会造成最后调用 strcpy() 的结果不正确</span></span><br><span class="line"><span class="comment">start = n-1;</span></span><br><span class="line"><span class="comment">while(p!=0)</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    if(ht[p].left == c)</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">        cd[start] = '1';</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    else</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">        cd[start] = '0';</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    start--;</span></span><br><span class="line"><span class="comment">    c = p;</span></span><br><span class="line"><span class="comment">    p = ht[p].parent;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h1 id="四-完整代码"><a href="#四-完整代码" class="headerlink" title="四. 完整代码"></a>四. 完整代码</h1><p>有一部分来自上一篇的代码, 为了与文档上的结果一致, 做出了一些修改.<br>逻辑上面说了, 只不过细节还有些需要注意的地方, 比如字符串的内部指针, 以及挑选最小的两个元素.<br>(还有很多可以优化的地方.)<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 20  <span class="comment">/*叶子结点的最大值*/</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> M 2*N-1  <span class="comment">/*所有结点的最大值*/</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> * HuffmanCode[N+<span class="number">1</span>];<span class="comment">/*存放编码的结果*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> weight;</span><br><span class="line">    <span class="keyword">int</span> parent;</span><br><span class="line">    <span class="keyword">int</span> LChild;</span><br><span class="line">    <span class="keyword">int</span> RChild;</span><br><span class="line">&#125;HuffmanTree[M+<span class="number">1</span>];  <span class="comment">/*HuffmanTree 是一个结构体数组类型, 0 号单元不用.*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">select</span><span class="params">(HuffmanTree ht, <span class="keyword">int</span> n, <span class="keyword">int</span> * s1, <span class="keyword">int</span> * s2)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CrtHuffmanTree</span><span class="params">(HuffmanTree ht, <span class="keyword">int</span> w[], <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ScanW</span><span class="params">(<span class="keyword">int</span> w[], <span class="keyword">int</span> * n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintHuffmanTree</span><span class="params">(HuffmanTree ht, <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CrtHuffmanCode</span><span class="params">(HuffmanTree ht, HuffmanCode hc, <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintHuffmanCode</span><span class="params">(HuffmanCode hc, <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    HuffmanTree ht;</span><br><span class="line">    HuffmanCode hc;</span><br><span class="line">    <span class="keyword">int</span> w[N], n;</span><br><span class="line"></span><br><span class="line">    ScanW(w, &amp;n);</span><br><span class="line"></span><br><span class="line">    CrtHuffmanTree(ht, w, n);</span><br><span class="line"></span><br><span class="line">    PrintHuffmanTree(ht, n);</span><br><span class="line"></span><br><span class="line">    CrtHuffmanCode(ht, hc, n);</span><br><span class="line"></span><br><span class="line">    PrintHuffmanCode(hc, n);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出赫夫曼树</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintHuffmanTree</span><span class="params">(HuffmanTree ht, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"赫夫曼树如下: \n"</span>);</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;<span class="number">2</span>*n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"权重: %2d, 双亲: %2d, 左子树: %2d, 右子树 %2d .\n"</span>, ht[i].weight, ht[i].parent, ht[i].LChild, ht[i].RChild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输入个数和权重</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ScanW</span><span class="params">(<span class="keyword">int</span> w[], <span class="keyword">int</span> *n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入叶子结点的个数: \n"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, n);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入各结点的权重: \n"</span>);</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;(*n); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;w[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//选出最小的两个数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">select</span><span class="params">(HuffmanTree ht, <span class="keyword">int</span> n, <span class="keyword">int</span> * s1, <span class="keyword">int</span> * s2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        这个函数是为了找出 ht[1]~ht[n] 中 parent 等于 0, 而且最小的两个数, 同时保证 s1 小于 s2.</span></span><br><span class="line"><span class="comment">        思路: s2 等于第一个 parent 为 0 的数的下标, s1 等于第二个 parent 为 0 的下标, s1 往后找最小的数, s2 也往后找最小的数.</span></span><br><span class="line"><span class="comment">        这样就保证了 s2 和 s1 不会是同一个数. 最后保证 s1 对应的值 小于 s2对应的值.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">int</span> i, first, second, min;</span><br><span class="line">    *s1 = <span class="number">0</span>;</span><br><span class="line">    *s2 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(ht[i].parent != <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            first = i;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    *s2 = first;  <span class="comment">/*确保它们不会指向同一个元素*/</span></span><br><span class="line">    <span class="keyword">for</span>(i=first+<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(ht[i].parent != <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            second = i;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    *s1 = second;</span><br><span class="line">    <span class="keyword">for</span>(i=second+<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(ht[i].parent != <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(ht[i].weight &lt;= ht[*s1].weight)</span><br><span class="line">            &#123;</span><br><span class="line">                *s1 = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=first+<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(ht[i].parent != <span class="number">0</span> || i == (*s1))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(ht[i].weight &lt;= ht[*s2].weight)</span><br><span class="line">            &#123;</span><br><span class="line">                *s2 = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*判断的是 ht[*s1].weight 和 ht[*s2].weight, 而不是 s1 和 s2*/</span></span><br><span class="line">    <span class="keyword">if</span>(ht[*s1].weight &gt; ht[*s2].weight)</span><br><span class="line">    &#123;</span><br><span class="line">        min = *s1;</span><br><span class="line">        *s1 = *s2;</span><br><span class="line">        *s2 = min;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*此处是为了跟文档上面的编码结果一致*/</span></span><br><span class="line">    <span class="keyword">if</span>(ht[*s1].LChild==<span class="number">0</span> &amp;&amp; ht[*s2].LChild!=<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        min = *s1;</span><br><span class="line">        *s1 = *s2;</span><br><span class="line">        *s2 = min;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*两个 if 保证了赫夫曼树中, 左子树小于右子树, 同时叶子结点在右子树(除最底层)*/</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"本次选出: %d %d\n"</span>, ht[*s1].weight, ht[*s2].weight);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//构造赫夫曼树</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CrtHuffmanTree</span><span class="params">(HuffmanTree ht, <span class="keyword">int</span> w[], <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, s1, s2;</span><br><span class="line">    <span class="comment">/*构造赫夫曼树 ht[M+1], w[] 存放 n 个权值. */</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/*1~n 号单元存放叶子结点, 初始化*/</span></span><br><span class="line">        ht[i].weight = w[i<span class="number">-1</span>];</span><br><span class="line">        ht[i].parent = <span class="number">0</span>;</span><br><span class="line">        ht[i].LChild = <span class="number">0</span>;</span><br><span class="line">        ht[i].RChild = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=n+<span class="number">1</span>; i&lt;<span class="number">2</span>*n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/*n+1~2*n-1 号单元存放非叶子结点, 初始化*/</span></span><br><span class="line">        ht[i].weight = <span class="number">0</span>;</span><br><span class="line">        ht[i].parent = <span class="number">0</span>;</span><br><span class="line">        ht[i].LChild = <span class="number">0</span>;</span><br><span class="line">        ht[i].RChild = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//开始创建赫夫曼树</span></span><br><span class="line">    <span class="keyword">for</span>(i=n+<span class="number">1</span>; i&lt;<span class="number">2</span>*n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//从 ht[1]~ht[i-1] 中选两个 parent 为 0 而且权值最小的两个数, 赋给 s1, s2</span></span><br><span class="line">        select(ht, i<span class="number">-1</span>, &amp;s1, &amp;s2);</span><br><span class="line">        ht[i].weight = ht[s1].weight + ht[s2].weight;</span><br><span class="line">        ht[i].LChild = s1;</span><br><span class="line">        ht[i].RChild = s2;</span><br><span class="line">        ht[s1].parent = i;</span><br><span class="line">        ht[s2].parent = i;</span><br><span class="line"></span><br><span class="line">    &#125;<span class="comment">/*赫夫曼树建立完毕*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//对赫夫曼树编码</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CrtHuffmanCode</span><span class="params">(HuffmanTree ht, HuffmanCode hc, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//传入赫夫曼树, 存储赫夫曼编码的数组, 需要编码的个数</span></span><br><span class="line">    <span class="keyword">int</span> i, c, p, start;</span><br><span class="line">    <span class="keyword">char</span> * cd;<span class="comment">/*cd 作为临时指针, 指向编码过程中得到的字符串*/</span></span><br><span class="line">    cd = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>((n+<span class="number">1</span>)*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));<span class="comment">/*光有一个指针只能存一个地址, 字符串都没地方放, 所以需要动态分配一块内存存放字符串(n 个字符是有备无患的意思吗???)*/</span></span><br><span class="line">    cd[n] = <span class="string">'\0'</span>;<span class="comment">/*最后一位添加一个字符串结束标志*/</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/*从赫夫曼树第一个元素开始(1-n 存储的是叶子结点), c 指向当前结点, p 指向双亲结点*/</span></span><br><span class="line">        c = i;</span><br><span class="line">        p = ht[i].parent;</span><br><span class="line">        start = n;<span class="comment">/*start 是 cd 指向的数组的内部指针*/</span></span><br><span class="line">        <span class="keyword">while</span>(p!=<span class="number">0</span>)<span class="comment">/*只要当前结点不是根节点(只有根节点的双亲为 0), 就一直循环*/</span></span><br><span class="line">        &#123;</span><br><span class="line">            start--;</span><br><span class="line">            <span class="keyword">if</span>(ht[p].LChild == c)<span class="comment">/*如果双亲的左孩子指向当前结点, 说明往左走走到当前结点.(c 是一个数组下标)*/</span></span><br><span class="line">            &#123;</span><br><span class="line">                cd[start] = <span class="string">'1'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                cd[start] = <span class="string">'0'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/*向上移动*/</span></span><br><span class="line">            c = p;</span><br><span class="line">            p = ht[p].parent;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*得到某个叶子结点的编码之后, 为其指针分配内存空间(长度根据实际情况决定)*/</span></span><br><span class="line">        hc[i] = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>((n+<span class="number">1</span>-start)*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">        <span class="built_in">strcpy</span>(hc[i], &amp;cd[start]);<span class="comment">/*取 start 位置的字符的指针, 通过 strcpy 复制*/</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintHuffmanCode</span><span class="params">(HuffmanCode hc, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"赫夫曼编码: \n"</span>);</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, hc[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+    </div>
+	
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/articles/Java语法基础/" class="post-nav-title-link" rel="prev" title="Java 语法基础">
+                <i class="fa fa-chevron-left"></i> Java 语法基础 
+              </a>
+            
+          </div>
+		  
+		  <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/articles/赫夫曼树/" class="post-nav-title-link" rel="next" title="赫夫曼树">
+                赫夫曼树  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+	
+  </div>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+	  
+      <div class="ds-thread" data-thread-key="2017/12/articles/赫夫曼树编码/" data-title="赫夫曼树编码" data-url="/2017/12/articles/赫夫曼树编码/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DLZ">
+          <p class="site-author-name" itemprop="name">DLZ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/diaolizhi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/diao-li-zhi-79/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+           
+              
+                <span class="links-of-author-item" style="text-align:left">
+                  <a href="/" title="当前站点" target="_blank">当前站点</a>
+                </span>
+              
+            
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-赫夫曼树与编码的关系"><span class="nav-text">一. 赫夫曼树与编码的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-赫夫曼树编码的算法"><span class="nav-text">二. 赫夫曼树编码的算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-赫夫曼树编码代码"><span class="nav-text">三. 赫夫曼树编码代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四-完整代码"><span class="nav-text">四. 完整代码</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-pencil-square-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DLZ</span>
+  <!--
+  
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" target="_blank">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div style="padding-top:1px;">
+ <span>鄂ICP备16017973号</span>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </div></footer>
+    
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up fa-2x" title="回到顶部"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zPFLpkVuL8bNpqMl24W0E86i-gzGzoHsz", "YhJrGjyDpGD6a8V2BvhDU0X9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  <script type="text/JavaScript">
+function hideElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="none";
+}
+
+function showElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="block";
+}
+
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+
+  
+  
+
+</body>
+</html>

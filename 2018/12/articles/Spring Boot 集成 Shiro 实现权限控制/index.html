@@ -1,0 +1,962 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="入门">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+	
+</script>
+
+
+
+<meta name="description" content="拥有指定的权限才可以进行相应的操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot 集成 Shiro 实现权限控制">
+<meta property="og:url" content="/2018/12/articles/Spring Boot 集成 Shiro 实现权限控制/index.html">
+<meta property="og:site_name" content="编程之路">
+<meta property="og:description" content="拥有指定的权限才可以进行相应的操作。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-01T13:59:30.931Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Boot 集成 Shiro 实现权限控制">
+<meta name="twitter:description" content="拥有指定的权限才可以进行相应的操作。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Spring Boot 集成 Shiro 实现权限控制 | 编程之路  - 编程之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?097ddf3186a1ecd7ec2b4978b813d395";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">编程之路</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle" id="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button onclick="showSubtitle()">
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar-check-o"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search fa-lg"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring Boot 集成 Shiro 实现权限控制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-12-11T00:00:00+08:00" content="2018-12-11">
+              2018-12-11
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring Boot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/12/articles/Spring Boot 集成 Shiro 实现权限控制/" class="leancloud_visitors" data-flag-title="Spring Boot 集成 Shiro 实现权限控制" style="display:none">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>拥有指定的权限才可以进行相应的操作。</p>
+<a id="more"></a>
+<p>有一些操作是所有人都可以执行的，比如：访问首页、访问登录界面。而有一些就需要管理员权限，比如：删除用户。</p>
+<p>为了实现这种功能，Shiro 提供了<strong>角色</strong>和<strong>权限</strong>两个概念。</p>
+<p>推荐一篇博客：<a href="https://mrbird.cc/Spring-Boot-Shiro%20Authorization.html" target="_blank" rel="noopener">Spring Boot Shiro权限控制</a></p>
+<p>我的理解是：一个用户对应一个或多个角色，一个角色又对应一个或多个权限。这样一来，用户就对应了多个明确的角色或者权限。然后设置接口所需要的角色或权限，实现权限控制。</p>
+<p>在 Web 应用中，角色、权限都存放在数据库中，当然了还有用户表，以及<em>用户-角色表</em>、<em>角色-权限表</em>，总共有五个数据表。</p>
+<p>当 Shiro 需要验证权限的时候，就需要从数据库中查找数据。</p>
+<p>那么需要查找的是什么呢？</p>
+<p>先看看 Shiro 需要的是什么。Realm 除了认证功能之外，还有授权的功能，对应的就是 doGetAuthorizationInfo 方法。在这个方法中返回的是一个 AuthorizationInfo 对象，而这个对象有两个方法：setRoles 和 setStringPermissions。</p>
+<p>也就是说，Shiro 需要用户所对应的多个角色，以及多个权限。那么在数据访问层要做的就是查找一个用户所对应的角色和权限。</p>
+<p>大概了解授权的流程之后，下面就具体说该怎么做。</p>
+<h1 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h1><p>建议阅读上面推荐的文章，讲得比较详细。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE <span class="comment">/*!32312 IF NOT EXISTS*/</span>`shiro-login` <span class="comment">/*!40100 DEFAULT CHARACTER SET utf8 */</span>;</span><br><span class="line"></span><br><span class="line">USE `shiro-login`;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Table structure for table `t_permission` */</span></span><br><span class="line"></span><br><span class="line">DROP TABLE IF EXISTS `t_permission`;</span><br><span class="line"></span><br><span class="line">CREATE TABLE `t_permission` (</span><br><span class="line">  `id` <span class="keyword">int</span>(<span class="number">11</span>) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `url` varchar(<span class="number">50</span>) NOT NULL,</span><br><span class="line">  `name` varchar(<span class="number">100</span>) NOT NULL,</span><br><span class="line">  <span class="function">PRIMARY <span class="title">KEY</span> <span class="params">(`id`)</span></span></span><br><span class="line"><span class="function">) ENGINE</span>=InnoDB AUTO_INCREMENT=<span class="number">4</span> DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Table structure for table `t_role` */</span></span><br><span class="line"></span><br><span class="line">DROP TABLE IF EXISTS `t_role`;</span><br><span class="line"></span><br><span class="line">CREATE TABLE `t_role` (</span><br><span class="line">  `id` <span class="keyword">int</span>(<span class="number">11</span>) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(<span class="number">20</span>) NOT NULL,</span><br><span class="line">  `memo` varchar(<span class="number">50</span>) NOT NULL,</span><br><span class="line">  <span class="function">PRIMARY <span class="title">KEY</span> <span class="params">(`id`)</span></span></span><br><span class="line"><span class="function">) ENGINE</span>=InnoDB AUTO_INCREMENT=<span class="number">3</span> DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Table structure for table `t_role_permission` */</span></span><br><span class="line"></span><br><span class="line">DROP TABLE IF EXISTS `t_role_permission`;</span><br><span class="line"></span><br><span class="line">CREATE TABLE `t_role_permission` (</span><br><span class="line">  `rid` <span class="keyword">int</span>(<span class="number">11</span>) NOT NULL,</span><br><span class="line">  `pid` <span class="keyword">int</span>(<span class="number">11</span>) NOT NULL,</span><br><span class="line">  <span class="function">PRIMARY <span class="title">KEY</span> <span class="params">(`rid`,`pid`)</span></span></span><br><span class="line"><span class="function">) ENGINE</span>=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Table structure for table `t_user` */</span></span><br><span class="line"></span><br><span class="line">DROP TABLE IF EXISTS `t_user`;</span><br><span class="line"></span><br><span class="line">CREATE TABLE `t_user` (</span><br><span class="line">  `id` <span class="keyword">int</span>(<span class="number">11</span>) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `username` varchar(<span class="number">20</span>) NOT NULL,</span><br><span class="line">  `password` varchar(<span class="number">100</span>) NOT NULL,</span><br><span class="line">  `salt` varchar(<span class="number">20</span>) NOT NULL,</span><br><span class="line">  <span class="function">PRIMARY <span class="title">KEY</span> <span class="params">(`id`)</span>,</span></span><br><span class="line"><span class="function">  UNIQUE KEY `username` <span class="params">(`username`)</span></span></span><br><span class="line"><span class="function">) ENGINE</span>=InnoDB AUTO_INCREMENT=<span class="number">10</span> DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Table structure for table `t_user_role` */</span></span><br><span class="line"></span><br><span class="line">DROP TABLE IF EXISTS `t_user_role`;</span><br><span class="line"></span><br><span class="line">CREATE TABLE `t_user_role` (</span><br><span class="line">  `uid` <span class="keyword">int</span>(<span class="number">11</span>) NOT NULL,</span><br><span class="line">  `rid` <span class="keyword">int</span>(<span class="number">11</span>) NOT NULL,</span><br><span class="line">  <span class="function">PRIMARY <span class="title">KEY</span> <span class="params">(`uid`,`rid`)</span></span></span><br><span class="line"><span class="function">) ENGINE</span>=InnoDB DEFAULT CHARSET=utf8;</span><br></pre></td></tr></table></figure>
+<h1 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h1><p>数据仅供参考，根据自己的设计插入数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="comment">/*!32312 IF NOT EXISTS*/</span><span class="string">`shiro-login`</span> <span class="comment">/*!40100 DEFAULT CHARACTER SET utf8 */</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">USE</span> <span class="string">`shiro-login`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Data for the table `t_permission` */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span>  <span class="keyword">into</span> <span class="string">`t_permission`</span>(<span class="string">`id`</span>,<span class="string">`url`</span>,<span class="string">`name`</span>) <span class="keyword">values</span> </span><br><span class="line">(<span class="number">1</span>,<span class="string">'/user'</span>,<span class="string">'user:add'</span>),</span><br><span class="line">(<span class="number">2</span>,<span class="string">'/user'</span>,<span class="string">'user:delete'</span>),</span><br><span class="line">(<span class="number">3</span>,<span class="string">'/user'</span>,<span class="string">'user:see'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Data for the table `t_role` */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span>  <span class="keyword">into</span> <span class="string">`t_role`</span>(<span class="string">`id`</span>,<span class="string">`name`</span>,<span class="string">`memo`</span>) <span class="keyword">values</span> </span><br><span class="line">(<span class="number">1</span>,<span class="string">'admin'</span>,<span class="string">'超级管理员'</span>),</span><br><span class="line">(<span class="number">2</span>,<span class="string">'test'</span>,<span class="string">'测试用户'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Data for the table `t_role_permission` */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span>  <span class="keyword">into</span> <span class="string">`t_role_permission`</span>(<span class="string">`rid`</span>,<span class="string">`pid`</span>) <span class="keyword">values</span> </span><br><span class="line">(<span class="number">1</span>,<span class="number">1</span>),</span><br><span class="line">(<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">(<span class="number">1</span>,<span class="number">3</span>),</span><br><span class="line">(<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Data for the table `t_user` */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span>  <span class="keyword">into</span> <span class="string">`t_user`</span>(<span class="string">`id`</span>,<span class="string">`username`</span>,<span class="string">`password`</span>,<span class="string">`salt`</span>) <span class="keyword">values</span> </span><br><span class="line">(<span class="number">1</span>,<span class="string">'zs'</span>,<span class="string">'6f294b522deba0531722c92b4199c6b95d76b00e231ca2c765aae8c32fd36222'</span>,<span class="string">'zsreg'</span>),</span><br><span class="line">(<span class="number">2</span>,<span class="string">'root'</span>,<span class="string">'6a9629cd8b8c68a86c800cdeae59f2b3185bb6ce1c0896a675e91a860c7702ee'</span>,<span class="string">'rootreg'</span>),</span><br><span class="line">(<span class="number">3</span>,<span class="string">'admin'</span>,<span class="string">'dddf9fe0979a7db4fbf06a2366c5862e775fd702c56249decb372e876636b9ab'</span>,<span class="string">'adminreg'</span>),</span><br><span class="line">(<span class="number">8</span>,<span class="string">'aaa'</span>,<span class="string">'02d66435c563cc9130876fc5d7c1496e6b451345741b46d1472de3d6c82a8afa'</span>,<span class="string">'aaareg'</span>),</span><br><span class="line">(<span class="number">9</span>,<span class="string">'aaaa'</span>,<span class="string">'b344150010d7630f0422fdd9f491a450a8299831e28c78b2f5173ed5b1fd164e'</span>,<span class="string">'aaaareg'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Data for the table `t_user_role` */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span>  <span class="keyword">into</span> <span class="string">`t_user_role`</span>(<span class="string">`uid`</span>,<span class="string">`rid`</span>) <span class="keyword">values</span> </span><br><span class="line">(<span class="number">2</span>,<span class="number">1</span>),</span><br><span class="line">(<span class="number">9</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="创建实体类"><a href="#创建实体类" class="headerlink" title="创建实体类"></a>创建实体类</h1><p>使用 IDEA 自动生成即可。</p>
+<h1 id="UserRoleMapper"><a href="#UserRoleMapper" class="headerlink" title="UserRoleMapper"></a>UserRoleMapper</h1><p>根据用户名查找角色集：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserRoleMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"SELECT t_role.name FROM t_role, t_user, t_user_role WHERE t_user.`id` = t_user_role.`uid` AND t_user.`username` = #&#123;username&#125; AND t_user_role.`rid` = t_role.`id`"</span>)</span><br><span class="line">    <span class="function">List&lt;TRole&gt; <span class="title">findRolesByUsername</span><span class="params">(String username)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="UserPermissionMapper"><a href="#UserPermissionMapper" class="headerlink" title="UserPermissionMapper"></a>UserPermissionMapper</h1><p>根据用户名查找权限集：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserPermissionMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"SELECT p.* FROM t_user u LEFT JOIN t_user_role ur ON u.`id` = ur.`uid` LEFT JOIN t_role r ON ur.`rid` = r.`id` LEFT JOIN t_role_permission rp ON r.`id` = rp.`rid` LEFT JOIN t_permission p ON rp.`pid` = p.`id` WHERE u.`username` = #&#123;username&#125; "</span>)</span><br><span class="line">    <span class="function">List&lt;TPermission&gt; <span class="title">findPermissonsByUsername</span><span class="params">(String username)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Realm-添加方法"><a href="#Realm-添加方法" class="headerlink" title="Realm 添加方法"></a>Realm 添加方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> UserRoleMapper userRoleMapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> UserPermissionMapper userPermissionMapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> AuthorizationInfo <span class="title">doGetAuthorizationInfo</span><span class="params">(PrincipalCollection principals)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    String username = (String) SecurityUtils.getSubject().getPrincipal();</span><br><span class="line"></span><br><span class="line">    List&lt;TRole&gt; roles = userRoleMapper.findRolesByUsername(username);</span><br><span class="line"></span><br><span class="line">    SimpleAuthorizationInfo info = <span class="keyword">new</span> SimpleAuthorizationInfo();</span><br><span class="line">    Set&lt;String&gt; roleSet = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (TRole t : roles) &#123;</span><br><span class="line">        roleSet.add(t.getName());</span><br><span class="line">        System.out.println(t.getName());</span><br><span class="line">    &#125;</span><br><span class="line">    info.setRoles(roleSet);</span><br><span class="line"></span><br><span class="line">    List&lt;TPermission&gt; ps = userPermissionMapper.findPermissonsByUsername(username);</span><br><span class="line"></span><br><span class="line">    Set&lt;String&gt; pSet = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (TPermission p : ps) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//            如果在 mapper 没有查到任何数据，ps 也不为 null，但是 ps.get(0) 的值是 null</span></span><br><span class="line">        <span class="keyword">if</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">            pSet.add(p.getName());</span><br><span class="line">            System.out.println(p.getName());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    info.setStringPermissions(pSet);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> info;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="添加权限控制"><a href="#添加权限控制" class="headerlink" title="添加权限控制"></a>添加权限控制</h1><h2 id="方法一：配置文件中"><a href="#方法一：配置文件中" class="headerlink" title="方法一：配置文件中"></a>方法一：配置文件中</h2><p>在 ShiroConfig 类的 shiroFilterChainDefinition 方法中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ShiroFilterChainDefinition <span class="title">shiroFilterChainDefinition</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    DefaultShiroFilterChainDefinition chainDefinition = <span class="keyword">new</span> DefaultShiroFilterChainDefinition();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//        authc 是必须通过认证，而不是“记住我”</span></span><br><span class="line">    chainDefinition.addPathDefinition(<span class="string">"/admin/**"</span>, <span class="string">"roles[admin]"</span>);</span><br><span class="line"></span><br><span class="line">    chainDefinition.addPathDefinition(<span class="string">"/me/**"</span>, <span class="string">"roles[admin]"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> chainDefinition;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法二：使用注解"><a href="#方法二：使用注解" class="headerlink" title="方法二：使用注解"></a>方法二：使用注解</h2><p>在 Controller 的接口上配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 表示当前Subject已经通过login进行了身份验证；即Subject.isAuthenticated()返回true。</span></span><br><span class="line"><span class="meta">@RequiresAuthentication</span>  </span><br><span class="line"> </span><br><span class="line"><span class="comment">// 表示当前Subject已经身份验证或者通过记住我登录的。</span></span><br><span class="line"><span class="meta">@RequiresUser</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 表示当前Subject没有身份验证或通过记住我登录过，即是游客身份。</span></span><br><span class="line"><span class="meta">@RequiresGuest</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 表示当前Subject需要角色admin和user。  </span></span><br><span class="line"><span class="meta">@RequiresRoles</span>(value=&#123;<span class="string">"admin"</span>, <span class="string">"user"</span>&#125;, logical= Logical.AND)  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 表示当前Subject需要权限user:a或user:b。</span></span><br><span class="line"><span class="meta">@RequiresPermissions</span> (value=&#123;<span class="string">"user:a"</span>, <span class="string">"user:b"</span>&#125;, logical= Logical.OR)</span><br></pre></td></tr></table></figure>
+<h1 id="定义授权失败跳转页面"><a href="#定义授权失败跳转页面" class="headerlink" title="定义授权失败跳转页面"></a>定义授权失败跳转页面</h1><p>在 properties 文件中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shiro.unauthorizedUrl=/error123</span><br><span class="line">shiro.loginUrl=/toLogin</span><br></pre></td></tr></table></figure>
+<h1 id="捕获全局异常"><a href="#捕获全局异常" class="headerlink" title="捕获全局异常"></a>捕获全局异常</h1><h2 id="两种情况"><a href="#两种情况" class="headerlink" title="两种情况"></a>两种情况</h2><ul>
+<li>一个接口使用注解指定了所需要的权限，当<strong>没有登录</strong>或者<strong>没有权限</strong>访问这个接口时，它不会跳转到失败页面，也不会跳转到登录页面，而是抛出一个异常。</li>
+<li>在配置文件中指定一个接口所需的权限，那么它就会跳转到错误页面或者登录界面。</li>
+</ul>
+<p>为了解决第一种情况，就需要捕获异常：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShiroExceptionHandler</span> </span>&#123; </span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = AuthorizationException.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">handleAuthorizationException</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"没有权限访问"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>创建角色和权限</li>
+<li>查询角色和权限</li>
+<li>重写 doGetAuthorizationInfo</li>
+<li>给接口配置权限</li>
+</ul>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+    </div>
+	
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/articles/Centos nginx 配置 https/" class="post-nav-title-link" rel="prev" title="Centos nginx 配置 https">
+                <i class="fa fa-chevron-left"></i> Centos nginx 配置 https 
+              </a>
+            
+          </div>
+		  
+		  <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/articles/Spring Boot 集成 Shiro 实现记住我/" class="post-nav-title-link" rel="next" title="Spring Boot 集成 Shiro 实现 Remember me">
+                Spring Boot 集成 Shiro 实现 Remember me  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+	
+  </div>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+	  
+      <div class="ds-thread" data-thread-key="2018/12/articles/Spring Boot 集成 Shiro 实现权限控制/" data-title="Spring Boot 集成 Shiro 实现权限控制" data-url="/2018/12/articles/Spring Boot 集成 Shiro 实现权限控制/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DLZ">
+          <p class="site-author-name" itemprop="name">DLZ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/diaolizhi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/diao-li-zhi-79/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+           
+              
+                <span class="links-of-author-item" style="text-align:left">
+                  <a href="/" title="当前站点" target="_blank">当前站点</a>
+                </span>
+              
+            
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建数据表"><span class="nav-text">创建数据表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入数据"><span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建实体类"><span class="nav-text">创建实体类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UserRoleMapper"><span class="nav-text">UserRoleMapper</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UserPermissionMapper"><span class="nav-text">UserPermissionMapper</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Realm-添加方法"><span class="nav-text">Realm 添加方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加权限控制"><span class="nav-text">添加权限控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法一：配置文件中"><span class="nav-text">方法一：配置文件中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法二：使用注解"><span class="nav-text">方法二：使用注解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义授权失败跳转页面"><span class="nav-text">定义授权失败跳转页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#捕获全局异常"><span class="nav-text">捕获全局异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#两种情况"><span class="nav-text">两种情况</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-pencil-square-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DLZ</span>
+  <!--
+  
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" target="_blank">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div style="padding-top:1px;">
+ <span>鄂ICP备16017973号</span>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </div></footer>
+    
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up fa-2x" title="回到顶部"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zPFLpkVuL8bNpqMl24W0E86i-gzGzoHsz", "YhJrGjyDpGD6a8V2BvhDU0X9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  <script type="text/JavaScript">
+function hideElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="none";
+}
+
+function showElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="block";
+}
+
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+
+  
+  
+
+</body>
+</html>

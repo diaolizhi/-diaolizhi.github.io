@@ -1,0 +1,1012 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="入门">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+	
+</script>
+
+
+
+<meta name="description" content="第一篇关于 Java 的笔记.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 语法基础">
+<meta property="og:url" content="/2017/12/articles/Java语法基础/index.html">
+<meta property="og:site_name" content="编程之路">
+<meta property="og:description" content="第一篇关于 Java 的笔记.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-01T13:59:30.927Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 语法基础">
+<meta name="twitter:description" content="第一篇关于 Java 的笔记.">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Java 语法基础 | 编程之路  - 编程之路 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?097ddf3186a1ecd7ec2b4978b813d395";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">编程之路</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle" id="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button onclick="showSubtitle()">
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar-check-o"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search fa-lg"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java 语法基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-04T00:00:00+08:00" content="2017-12-04">
+              2017-12-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaSE</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/12/articles/Java语法基础/" class="leancloud_visitors" data-flag-title="Java 语法基础" style="display:none">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>第一篇关于 Java 的笔记.<br><a id="more"></a></p>
+<h1 id="1-标识符"><a href="#1-标识符" class="headerlink" title="1. 标识符:"></a>1. 标识符:</h1><ul>
+<li>开头: 字母, _ 和 $</li>
+<li>不能以数字开头, 不能包含空白字符: Tab, 空格, 回车, 换行</li>
+<li>不能使用关键字;</li>
+</ul>
+<h1 id="2-标识符的规范"><a href="#2-标识符的规范" class="headerlink" title="2. 标识符的规范"></a>2. 标识符的规范</h1><ul>
+<li>类名首字母大写</li>
+<li>方法名首字母小写</li>
+<li>常量全大写.</li>
+</ul>
+<h1 id="3-Java-的常用数据类型"><a href="#3-Java-的常用数据类型" class="headerlink" title="3. Java 的常用数据类型:"></a>3. Java 的常用数据类型:</h1><ul>
+<li>整型 byte, short, int, long</li>
+<li>浮点型 float, double(123.456 = 1.23456e+2)</li>
+<li>布尔型 true, false</li>
+<li>字符型 ‘a’, ‘A’</li>
+<li>字符串: “Hello, China”;</li>
+</ul>
+<h1 id="4-Java-7-新特性"><a href="#4-Java-7-新特性" class="headerlink" title="4. Java 7 新特性"></a>4. Java 7 新特性</h1><ul>
+<li>允许使用下划线分隔多个数位. 使用当前区域语言特性格式化数字: <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> number1 = <span class="number">1_000_000</span>;</span><br><span class="line">NumberFormat format = NumberFormat.getInstance(); </span><br><span class="line">System.out.println(format.format(number1));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="5-final-关键字"><a href="#5-final-关键字" class="headerlink" title="5. final 关键字"></a>5. final 关键字</h1><ul>
+<li>final 用于定义常量. 对于在整个项目中使用的常量, 通常按以下模式声明: <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> - <span class="keyword">final</span> <span class="keyword">int</span> MAX_VALUE = <span class="number">512</span>; <span class="comment">//常量名通常采用大写.</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="6-原始数据类型"><a href="#6-原始数据类型" class="headerlink" title="6. 原始数据类型"></a>6. 原始数据类型</h1><ul>
+<li>Java 中除了 int, float 等少数几个数据类型, 其余的数据类型都用来引用数据. int float 等这些数据类型称为”原始数据类型(primitive type)”;</li>
+</ul>
+<h1 id="7-枚举类型"><a href="#7-枚举类型" class="headerlink" title="7. 枚举类型"></a>7. 枚举类型</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义</span></span><br><span class="line"><span class="keyword">enum</span> Size&#123;SMALL, MEDIUM, LARGE&#125;;</span><br><span class="line"><span class="comment">//使用</span></span><br><span class="line">Size s = Size.SMALL;</span><br><span class="line"><span class="comment">//从字符串转换为枚举</span></span><br><span class="line">Size t = Size.valueof(<span class="string">"SMALL"</span>);</span><br></pre></td></tr></table></figure>
+<p><em>JDK 5 及以上才可用枚举类型.</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//枚举值的 foreach 迭代</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">enum</span> MyEnum&#123;</span><br><span class="line">    ONE, TWO, THREE</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(MyEnum value: MyEnum.values())&#123;</span><br><span class="line">        System.out.prinln(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//成员枚举MyEnum只能在顶级类或接口或静态上下文中定义???</span></span><br></pre></td></tr></table></figure></p>
+<p><em>枚举可用于 switch 语句</em></p>
+<ul>
+<li>枚举类型是引用类型. 枚举不属于原始数据类型, 它的每个具体值都引用一个特定的对象. 相同的值则引用一个对象. 可以用 “==” 和 equals() 方法直接对比枚举类型的值, 换句话说, 对于枚举类型的变量, “==” 和 equals() 方法执行的结果是等价的. (2017年12月4日 19:20:38, 看不懂)</li>
+</ul>
+<h1 id="8-运算符结合性"><a href="#8-运算符结合性" class="headerlink" title="8. 运算符结合性"></a>8. 运算符结合性</h1><ul>
+<li>除了赋值运算符 =, 所有的结合性都是从左到右, 例如: x = y = z 相当于 x = (y = z); 像 x = y =z 这样可能引起误解的代码应该尽量避免, 至少要加上括号, 或者添加注释.</li>
+</ul>
+<h1 id="9-Java-中的变量"><a href="#9-Java-中的变量" class="headerlink" title="9. Java 中的变量"></a>9. Java 中的变量</h1><p>变量可看成某内存单元(区域)的名字. 每个变量都有:</p>
+<ul>
+<li>名字(对应于内存中的位置)</li>
+<li>数据类型(决定了它所占用的内存单元数量)</li>
+<li>值(表示变量所占用的内存单元中所保存的数据.)</li>
+<li>变量的读写: 当新值被赋给变量时, 老值将被取代, 仅从内存中读数据不会破坏数据.</li>
+<li>(这个变量说的是那块内存还是那个名字? 2017年12月4日 20:46:42)</li>
+</ul>
+<h1 id="10-变量的使用准则"><a href="#10-变量的使用准则" class="headerlink" title="10. 变量的使用准则"></a>10. 变量的使用准则</h1><ul>
+<li>在实际开发中,  一般使用变量来存储用户在程序运行时输入的数据.</li>
+<li><strong>变量在使用之前应 保证它有确切的值.</strong></li>
+<li>Java 变量遵循 <strong>“同名变量的屏蔽原则”</strong>.</li>
+</ul>
+<h1 id="11-在运行时读取用户输入"><a href="#11-在运行时读取用户输入" class="headerlink" title="11. 在运行时读取用户输入"></a>11. 在运行时读取用户输入</h1><ul>
+<li>方法一</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String firstNumber = JOptionPane.showInputDialog(<span class="string">"Enter: "</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法二</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Scanner in = <span class="keyword">new</span> Scanners(System.in);</span><br><span class="line">System.out.print(<span class="string">"What is your name? "</span>);</span><br><span class="line">String name = in.nextLine();</span><br></pre></td></tr></table></figure>
+<h1 id="12-变量间的类型转换"><a href="#12-变量间的类型转换" class="headerlink" title="12. 变量间的类型转换"></a>12. 变量间的类型转换</h1><ul>
+<li>自动类型转换是安全的(不精确的-&gt;更精确的, 不用强制类型转换)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> intValue = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">long</span> longValue = intValue;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>强制类型转换可能会引起信息的损失</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> doubleValue = <span class="number">1234567890</span>;</span><br><span class="line"><span class="keyword">float</span> floatValue = (<span class="keyword">float</span>)doubleValue;</span><br><span class="line">System.out.println(floatValue);  <span class="comment">//1.234567894E9</span></span><br></pre></td></tr></table></figure>
+<h1 id="13-另一种数据类型转换的方法"><a href="#13-另一种数据类型转换的方法" class="headerlink" title="13. 另一种数据类型转换的方法"></a>13. 另一种数据类型转换的方法</h1><ul>
+<li>通过原始类型的包装类完成类型转换</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> doubleValue = <span class="number">156.5</span>d;</span><br><span class="line">Double doubleObj = <span class="keyword">new</span> Double(doubleValue);</span><br><span class="line"><span class="keyword">byte</span> myByteValue = doubleObj.byteValue();</span><br><span class="line"><span class="keyword">int</span> myIntValue = doubleObj.intValue();</span><br><span class="line"><span class="keyword">float</span> myFloatValue = doubleObj.floatValue();</span><br><span class="line">String myString = doubleObj.toString();</span><br></pre></td></tr></table></figure>
+<h1 id="14-精度损失问题"><a href="#14-精度损失问题" class="headerlink" title="14. 精度损失问题"></a>14. 精度损失问题</h1><ul>
+<li>double 类型</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">"0.05 + 0.01 = "</span> + (<span class="number">0.05</span> + <span class="number">0.01</span>));</span><br><span class="line">System.out.println(<span class="string">"1.0 - 0.42 = "</span> + (<span class="number">1.0</span> - <span class="number">0.42</span>));</span><br><span class="line">System.out.println(<span class="string">"4.015 * 100 = "</span> + (<span class="number">4.015</span> * <span class="number">100</span>));</span><br><span class="line">System.out.println(<span class="string">"123.3 / 1000 = "</span> + (<span class="number">123.3</span> / <span class="number">100</span>));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 BigDecimal 解决该问题</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BigDecimal f1 = <span class="keyword">new</span> BigDecimal(<span class="string">"0.05"</span>);</span><br><span class="line">BigDecimal f2 = BigDecimal.valueOf(<span class="number">0.01</span>);</span><br><span class="line">BigDecimal f3 = <span class="keyword">new</span> BigDecimal(<span class="number">0.05</span>);</span><br><span class="line">System.out.println(<span class="string">"下面使用String作为BigDecimal构造器参数的计算结果："</span>);</span><br><span class="line">System.out.println(<span class="string">"0.05 + 0.01 = "</span> + f1.add(f2));</span><br><span class="line">System.out.println(<span class="string">"0.05 - 0.01 = "</span> + f1.subtract(f2));</span><br><span class="line">System.out.println(<span class="string">"0.05 * 0.01 = "</span> + f1.multiply(f2));</span><br><span class="line">System.out.println(<span class="string">"0.05 / 0.01 = "</span> + f1.divide(f2));</span><br></pre></td></tr></table></figure>
+<p>(在构建 BigDecimal 对象时应该使用字符串而不是 double 数值, 否则, 仍可能引发计算精度问题. (不知为何 2017年12月4日 21:43:20))</p>
+<h1 id="15-有关字符串"><a href="#15-有关字符串" class="headerlink" title="15. 有关字符串"></a>15. 有关字符串</h1><h2 id="A-字符串转为数字"><a href="#A-字符串转为数字" class="headerlink" title="A. 字符串转为数字"></a>A. 字符串转为数字</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> number = Integer.parseInt(numberString);</span><br></pre></td></tr></table></figure>
+<p>类 Integer 属于包 java.lang, 它 “封装” 了一个 int 类型的整数, 因此, 它是原始数据类型 int 的 “包装类”. (这个封装是什么意思? 2017年12月4日 21:46:21)</p>
+<h2 id="B-字符串转为浮点数"><a href="#B-字符串转为浮点数" class="headerlink" title="B. 字符串转为浮点数"></a>B. 字符串转为浮点数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">number1 = Double.parseDouble(firstNumber);</span><br><span class="line">number2 = Double.parseDouble(secondNumber);</span><br></pre></td></tr></table></figure>
+<p>Double.parseDouble 是一个 Double 类所定义的静态方法, 作用是将 String 数据转为 double 类型的, 返回值是 double 类型的数值. Double 是原始数据类型 double 的 “包装类”, 属于引用类型.(这句话看不懂, 包装类是什么???2017年12月4日 22:03:19)</p>
+<h2 id="C-字符串联接操作"><a href="#C-字符串联接操作" class="headerlink" title="C. 字符串联接操作"></a>C. 字符串联接操作</h2><p>使用运算符 + 联接字符串. <strong>将 String 和其他数据类型相加, 结果是一个新的 String.</strong></p>
+<h1 id="16-两种类型的变量"><a href="#16-两种类型的变量" class="headerlink" title="16. 两种类型的变量"></a>16. 两种类型的变量</h1><ul>
+<li>引用类型的变量, 引用一个对象(变量本身用于存放对象在内存中的位置, 可以看成是一个指针), 故又被称为 “对象变量”.</li>
+<li>原始数据类型的变量.</li>
+<li>两者的区分: 如果变量的数据类型是一个类的名字, 就是引用类型的变量, 它将引用一个对象. 如果变量的数据类型是一个原始类型(其名称由小写字母组成), 这种类型的变量将直接保存一个原始数据类型的值.</li>
+</ul>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+    </div>
+	
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/articles/Java中处理日期和时间/" class="post-nav-title-link" rel="prev" title="Java 中处理日期和时间">
+                <i class="fa fa-chevron-left"></i> Java 中处理日期和时间 
+              </a>
+            
+          </div>
+		  
+		  <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/articles/赫夫曼树编码/" class="post-nav-title-link" rel="next" title="赫夫曼树编码">
+                赫夫曼树编码  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+	
+  </div>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+	  
+      <div class="ds-thread" data-thread-key="2017/12/articles/Java语法基础/" data-title="Java 语法基础" data-url="/2017/12/articles/Java语法基础/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DLZ">
+          <p class="site-author-name" itemprop="name">DLZ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">109</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/diaolizhi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/diao-li-zhi-79/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+           
+              
+                <span class="links-of-author-item" style="text-align:left">
+                  <a href="/" title="当前站点" target="_blank">当前站点</a>
+                </span>
+              
+            
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-标识符"><span class="nav-text">1. 标识符:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-标识符的规范"><span class="nav-text">2. 标识符的规范</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Java-的常用数据类型"><span class="nav-text">3. Java 的常用数据类型:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Java-7-新特性"><span class="nav-text">4. Java 7 新特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-final-关键字"><span class="nav-text">5. final 关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-原始数据类型"><span class="nav-text">6. 原始数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-枚举类型"><span class="nav-text">7. 枚举类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-运算符结合性"><span class="nav-text">8. 运算符结合性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Java-中的变量"><span class="nav-text">9. Java 中的变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-变量的使用准则"><span class="nav-text">10. 变量的使用准则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-在运行时读取用户输入"><span class="nav-text">11. 在运行时读取用户输入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-变量间的类型转换"><span class="nav-text">12. 变量间的类型转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-另一种数据类型转换的方法"><span class="nav-text">13. 另一种数据类型转换的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-精度损失问题"><span class="nav-text">14. 精度损失问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-有关字符串"><span class="nav-text">15. 有关字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-字符串转为数字"><span class="nav-text">A. 字符串转为数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-字符串转为浮点数"><span class="nav-text">B. 字符串转为浮点数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-字符串联接操作"><span class="nav-text">C. 字符串联接操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-两种类型的变量"><span class="nav-text">16. 两种类型的变量</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-pencil-square-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DLZ</span>
+  <!--
+  
+</div>
+
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" target="_blank">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div style="padding-top:1px;">
+ <span>鄂ICP备16017973号</span>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </div></footer>
+    
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up fa-2x" title="回到顶部"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("zPFLpkVuL8bNpqMl24W0E86i-gzGzoHsz", "YhJrGjyDpGD6a8V2BvhDU0X9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  <script type="text/JavaScript">
+function hideElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="none";
+}
+
+function showElement(elementID)
+{
+	var myele=document.getElementById(elementID);
+	myele.style.display="block";
+}
+
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+
+  
+  
+
+</body>
+</html>
