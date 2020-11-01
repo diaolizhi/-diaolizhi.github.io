@@ -1,0 +1,81 @@
+{
+  "main": {
+    "id": "cc212728c1747a9c",
+    "type": "split",
+    "children": [
+      {
+        "id": "84a1a8632a18e892",
+        "type": "leaf",
+        "active": true,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "十一月的第一天.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "06d038beb3376b1f",
+    "type": "split",
+    "children": [
+      {
+        "id": "f22b1026beca9d8d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3353e2543be9b0da",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "a900bfa4f5a314bd",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": ""
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "2be182fc63572bb2",
+    "type": "split",
+    "children": [
+      {
+        "id": "499f81554a0fdc34",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "efa4353fce25a1c7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "十一月的第一天.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "lastOpenFiles": [
+    "Untitled.md"
+  ]
+}
