@@ -1,0 +1,83 @@
+{
+  "main": {
+    "id": "ec9cd12fcf8316d7",
+    "type": "split",
+    "children": [
+      {
+        "id": "2f3cb8bc033cffc0",
+        "type": "leaf",
+        "active": true,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "_posts/2020/十一月的第一天.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9462fc19adfb95a2",
+    "type": "split",
+    "children": [
+      {
+        "id": "2f54d0d81576c4c6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "535414bf7b399004",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "df6c561f8989c297",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": ""
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "ef03aadd31cec4b1",
+    "type": "split",
+    "children": [
+      {
+        "id": "4b3ac3dca89a9c53",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d3899b8c540f3188",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "_posts/2020/十一月的第一天.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "lastOpenFiles": [
+    "_posts/2020/十一月的第一天.md",
+    "_posts/articles/（六）Wbe服务器响应消息.md"
+  ]
+}

@@ -74,7 +74,6 @@ deploy:
 	repository: git@github.com:diaolizhi/diaolizhi.github.io.git
 	branch: master
 
-#add by wuxubj
 avatar: /images/avatar.jpg
 duoshuo_shortname: wuxubj
 duoshuo_share: true
