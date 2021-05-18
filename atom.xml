@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2021-03-10T09:36:28.082Z</updated>
+  <updated>2021-05-18T04:05:30.699Z</updated>
   <id>/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>负面情绪</title>
+    <link href="/2021/05/2021/05/%E8%B4%9F%E9%9D%A2%E6%83%85%E7%BB%AA/"/>
+    <id>/2021/05/2021/05/负面情绪/</id>
+    <published>2021-05-17T16:00:00.000Z</published>
+    <updated>2021-05-18T04:05:30.699Z</updated>
+    
+    <content type="html"><![CDATA[<p>…<br><a id="more"></a></p><p>还是想写点日记，可能是晚上听了一些话，让自己心里有点不舒服。尽管自己给了自己一些心理暗示，但是夜深人静的时候，还是感觉到了自己内心的负面情绪。自卑、嫉妒、焦虑、愧疚、急于表现自己、急躁、不甘，无助。 一时间找不到支持自己努力工作的点。</p><p>是为了让自己变成能力更强的人吗？可是自己还是很差劲、比不上别人。是为了把一项任务出色的完成吗？可是任务似乎是无穷无尽的，而自己遇到问题时还是一样的不知所措，可笑。 每天过得那么累，却感觉没有收获。 </p><hr><p>作为一个人，一个独立的生命，当不知所措、感觉到不对劲、意识到负面情绪产生的时候，应该从自己的内心寻求答案。一切负面情绪都来源于我们的内心，可能事情无法避免，但是事情是客观的，客观的事情没有完全决定了主观的情绪，我生来会有情绪，但不意味着我不能控制自己的情绪。傻逼需求跟我的愤怒没有必然的联系，生产环境问题的出现跟我的紧张没有必然的联系，别人的质疑、嘲讽理论上我也可以不紧张、不怀疑自己、不生气。 </p><p>负面情绪实在是累赘，对我来说，工作的难度是 1，工作时的负面情堵带来的难度就是 2，无形中承受了许多不必要的痛苦。一直以来，负面情绪比思路还得更快。甩掉累赘，生活似乎又变得轻松了许多。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;…&lt;br&gt;
+    
+    </summary>
+    
+      <category term="日记" scheme="/categories/%E6%97%A5%E8%AE%B0/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>做事的方法论</title>
@@ -241,26 +261,6 @@
   </entry>
   
   <entry>
-    <title>Maven 相关目录</title>
-    <link href="/2019/02/articles/Maven%E7%AC%94%E8%AE%B0%20-%20Maven%20%E7%9B%B8%E5%85%B3%E7%9B%AE%E5%BD%95/"/>
-    <id>/2019/02/articles/Maven笔记 - Maven 相关目录/</id>
-    <published>2019-02-07T16:00:00.000Z</published>
-    <updated>2020-11-01T13:59:30.929Z</updated>
-    
-    <content type="html"><![CDATA[<p>对 Maven 的理解及其相关目录。</p><a id="more"></a><h1 id="Maven-是什么"><a href="#Maven-是什么" class="headerlink" title="Maven 是什么"></a>Maven 是什么</h1><p>Maven 是一个构建工具、依赖管理工具。</p><h1 id="什么是构建"><a href="#什么是构建" class="headerlink" title="什么是构建"></a>什么是构建</h1><p>从源代码开始，编译 -&gt; 测试 -&gt; 打包 -&gt; 部署 -&gt; 运行。</p><h1 id="什么是依赖管理"><a href="#什么是依赖管理" class="headerlink" title="什么是依赖管理"></a>什么是依赖管理</h1><p>Maven 使用坐标定位一个依赖包，而且每一个依赖都指定了自己的依赖，不需要我们手动的下载、导入 jar 包，也不需要我们人工的解决包的依赖、以及兼容问题。</p><h1 id="M2-HOME"><a href="#M2-HOME" class="headerlink" title="M2_HOME"></a>M2_HOME</h1><p>在电脑上 M2_HOME 环境变量指向的是 Maven 的安装目录。</p><p>下面介绍该目录下的几个目录：</p><h2 id="bin"><a href="#bin" class="headerlink" title="bin"></a>bin</h2><p>该目录包含了 mvn 运行的脚本。</p><p>当我们在命令行执行 mvn 时，运行的就是这里的 mvn 文件。</p><h2 id="boot"><a href="#boot" class="headerlink" title="boot"></a>boot</h2><p>该目录包含一个类加载器框架。</p><p>对于一般的 Maven 用户不必关心它。</p><h2 id="conf"><a href="#conf" class="headerlink" title="conf"></a>conf</h2><p>该目录包含一个非常重要的 settings.xml 文件。</p><p>直接修改该文件将会在全局范围内改变 Maven 的设置，所以推荐将该文件复制到 <code>~/.m2/</code> 目录中再修改，这样做只对一个用户生效。</p><h2 id="lib"><a href="#lib" class="headerlink" title="lib"></a>lib</h2><p>该目录包含 Maven 运行时需要的 Jar 包，可以说这个目录才是真正的 Maven。</p><h1 id="m2"><a href="#m2" class="headerlink" title="~./m2"></a>~./m2</h1><p>默认情况下，<code>~/.m2</code> 目录下只有一个  repository 目录，这个 repository 包含通过 Maven 下载的 Jar 包。</p><p>另外，推荐将 <code>M2_HOME/conf/settings.xml</code> 复制到这个目录下。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;对 Maven 的理解及其相关目录。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Maven" scheme="/categories/Maven/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>创建 Maven 项目</title>
     <link href="/2019/02/articles/Maven%E7%AC%94%E8%AE%B0%20-%20%E5%88%9B%E5%BB%BA%20Maven%20%E9%A1%B9%E7%9B%AE/"/>
     <id>/2019/02/articles/Maven笔记 - 创建 Maven 项目/</id>
@@ -272,6 +272,26 @@
     <summary type="html">
     
       &lt;p&gt;温故知新。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Maven" scheme="/categories/Maven/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Maven 相关目录</title>
+    <link href="/2019/02/articles/Maven%E7%AC%94%E8%AE%B0%20-%20Maven%20%E7%9B%B8%E5%85%B3%E7%9B%AE%E5%BD%95/"/>
+    <id>/2019/02/articles/Maven笔记 - Maven 相关目录/</id>
+    <published>2019-02-07T16:00:00.000Z</published>
+    <updated>2020-11-01T13:59:30.929Z</updated>
+    
+    <content type="html"><![CDATA[<p>对 Maven 的理解及其相关目录。</p><a id="more"></a><h1 id="Maven-是什么"><a href="#Maven-是什么" class="headerlink" title="Maven 是什么"></a>Maven 是什么</h1><p>Maven 是一个构建工具、依赖管理工具。</p><h1 id="什么是构建"><a href="#什么是构建" class="headerlink" title="什么是构建"></a>什么是构建</h1><p>从源代码开始，编译 -&gt; 测试 -&gt; 打包 -&gt; 部署 -&gt; 运行。</p><h1 id="什么是依赖管理"><a href="#什么是依赖管理" class="headerlink" title="什么是依赖管理"></a>什么是依赖管理</h1><p>Maven 使用坐标定位一个依赖包，而且每一个依赖都指定了自己的依赖，不需要我们手动的下载、导入 jar 包，也不需要我们人工的解决包的依赖、以及兼容问题。</p><h1 id="M2-HOME"><a href="#M2-HOME" class="headerlink" title="M2_HOME"></a>M2_HOME</h1><p>在电脑上 M2_HOME 环境变量指向的是 Maven 的安装目录。</p><p>下面介绍该目录下的几个目录：</p><h2 id="bin"><a href="#bin" class="headerlink" title="bin"></a>bin</h2><p>该目录包含了 mvn 运行的脚本。</p><p>当我们在命令行执行 mvn 时，运行的就是这里的 mvn 文件。</p><h2 id="boot"><a href="#boot" class="headerlink" title="boot"></a>boot</h2><p>该目录包含一个类加载器框架。</p><p>对于一般的 Maven 用户不必关心它。</p><h2 id="conf"><a href="#conf" class="headerlink" title="conf"></a>conf</h2><p>该目录包含一个非常重要的 settings.xml 文件。</p><p>直接修改该文件将会在全局范围内改变 Maven 的设置，所以推荐将该文件复制到 <code>~/.m2/</code> 目录中再修改，这样做只对一个用户生效。</p><h2 id="lib"><a href="#lib" class="headerlink" title="lib"></a>lib</h2><p>该目录包含 Maven 运行时需要的 Jar 包，可以说这个目录才是真正的 Maven。</p><h1 id="m2"><a href="#m2" class="headerlink" title="~./m2"></a>~./m2</h1><p>默认情况下，<code>~/.m2</code> 目录下只有一个  repository 目录，这个 repository 包含通过 Maven 下载的 Jar 包。</p><p>另外，推荐将 <code>M2_HOME/conf/settings.xml</code> 复制到这个目录下。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对 Maven 的理解及其相关目录。&lt;/p&gt;
     
     </summary>
     
@@ -392,26 +412,6 @@
     <summary type="html">
     
       &lt;p&gt;拥有指定的权限才可以进行相应的操作。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Spring Boot" scheme="/categories/Spring-Boot/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Spring Boot 集成 Shiro 实现 Remember me</title>
-    <link href="/2018/12/articles/Spring%20Boot%20%E9%9B%86%E6%88%90%20Shiro%20%E5%AE%9E%E7%8E%B0%E8%AE%B0%E4%BD%8F%E6%88%91/"/>
-    <id>/2018/12/articles/Spring Boot 集成 Shiro 实现记住我/</id>
-    <published>2018-12-09T16:00:00.000Z</published>
-    <updated>2020-11-01T13:59:30.931Z</updated>
-    
-    <content type="html"><![CDATA[<p>当重启浏览器之后，不用重新登录。</p><a id="more"></a><h1 id="添加配置"><a href="#添加配置" class="headerlink" title="添加配置"></a>添加配置</h1><p>在 ShiroConfig 类中添加：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RememberMeManager <span class="title">rememberMeManager</span><span class="params">()</span></span>&#123;</span><br><span class="line">    CookieRememberMeManager cookieRememberMeManager = <span class="keyword">new</span> CookieRememberMeManager();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//        rememberme cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位），通过以下代码可以获取</span></span><br><span class="line">    <span class="comment">//        try &#123;</span></span><br><span class="line">    <span class="comment">//            KeyGenerator keygen = KeyGenerator.getInstance("AES");</span></span><br><span class="line">    <span class="comment">//            SecretKey deskey = keygen.generateKey();</span></span><br><span class="line">    <span class="comment">//            System.out.println(Base64.encodeToString(deskey.getEncoded()));</span></span><br><span class="line">    <span class="comment">//        &#125; catch (Exception e) &#123;</span></span><br><span class="line">    <span class="comment">//            e.printStackTrace();</span></span><br><span class="line">    <span class="comment">//        &#125;</span></span><br><span class="line"></span><br><span class="line">    cookieRememberMeManager.setCipherKey(Base64.decode(<span class="string">"WuB+y2gcHRnY2Lg9+Aqmqg=="</span>));</span><br><span class="line">    <span class="keyword">return</span> cookieRememberMeManager;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="登录接口"><a href="#登录接口" class="headerlink" title="登录接口"></a>登录接口</h1><p>登录接口添加一个参数用来接收<em>是否记住我</em>的参数：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"login"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">login</span><span class="params">(@RequestParam(name = <span class="string">"username"</span>)</span> String username,</span></span><br><span class="line"><span class="function">                    @<span class="title">RequestParam</span><span class="params">(name = <span class="string">"password"</span>)</span> String password,</span></span><br><span class="line"><span class="function">                    @<span class="title">RequestParam</span><span class="params">(name = <span class="string">"rememberMe"</span>)</span> <span class="keyword">boolean</span> rememberMe) </span>&#123;</span><br><span class="line"></span><br><span class="line">    UsernamePasswordToken token = <span class="keyword">new</span> UsernamePasswordToken(username, password, rememberMe);</span><br><span class="line"></span><br><span class="line">    Subject subject = SecurityUtils.getSubject();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (subject.isAuthenticated()) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"已经登录直接返回"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (subject.isRemembered()) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"已经被记住，直接返回"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//            token.setRememberMe(false);</span></span><br><span class="line">        subject.login(token);</span><br><span class="line"></span><br><span class="line">        subject.getSession().setTimeout(<span class="number">180000</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"登录成功"</span>;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.getMessage();</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"登录失败"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>2019年1月9日 22:18:23 更新</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;当重启浏览器之后，不用重新登录。&lt;/p&gt;
     
     </summary>
     
